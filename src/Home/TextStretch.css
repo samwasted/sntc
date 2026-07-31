@@ -98,14 +98,102 @@
 }
 
 /* ══════════════════════════════════════════════════════════════
- *  SECTION 2 — Technex reveal
+ *  SECTION 2 — Technex reveal + Craft Images
  * ══════════════════════════════════════════════════════════════ */
 .ts-section--tech {
   background: #000;
 }
 
-.ts-section--tech .ts-inner {
-  padding-top: 8vh;
+/* ─── Section 2: Combined Technex + Team + Footer ─────────── */
+.ts-section--combined {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3vh clamp(20px, 4vw, 56px) 3vh;
+  padding-top: 52px; /* navbar height — keeps images from hiding behind it */
+  box-sizing: border-box;
+  gap: 0;
+}
+
+/* Image row */
+.ts-combined-images {
+  display: flex;
+  gap: 2%;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: calc(100vh - 52px - 6vh - 80px); /* viewport minus navbar, padding, brand+links */
+}
+
+/* Left column: holds both Technex text & team image stacked (position relative) */
+.ts-combined-left {
+  flex: 0 1 66%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ts-tech-text-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Team image — height matches the craft grid's final GSAP target */
+.ts-team-img-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: calc(62vh - 52px); /* 62vh minus navbar height */
+  overflow: hidden;
+  border-radius: 8px;
+  background: #111;
+  transform: translateY(100vh); /* GSAP overrides this */
+}
+
+.ts-team-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Right column: craft grid, starts tall, GSAP shrinks height to 62vh */
+.ts-combined-right {
+  flex: 0 1 32%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end; /* images sit at the bottom, matching team img */
+}
+
+/* ─── Craft Image Stack (from ref) ───────────────────────────── */
+.craft-grid {
+  position: relative;
+  width: 100%;
+  height: 100%; /* fill the right column — matches team image height */
+  display: grid;
+  place-items: center;
+}
+
+.craft-img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  pointer-events: none;
+  will-change: transform, filter;
+  transform: translateZ(0.1px);
 }
 
 .ts-tech-label {
@@ -173,10 +261,54 @@
   margin: 0;
 }
 
+/* ─── Footer brand + links (inside pinned s2) ──────────────── */
+.ts-footer-brand {
+  width: 100%;
+  line-height: 0.85;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.ts-footer-links {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding: 14px clamp(20px, 4vw, 56px) 0;
+  margin-top: 12px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  flex-shrink: 0;
+  /* break out to full width */
+  margin-left: calc(-1 * clamp(20px, 4vw, 56px));
+  margin-right: calc(-1 * clamp(20px, 4vw, 56px));
+  width: calc(100% + 2 * clamp(20px, 4vw, 56px));
+}
+
+.ts-col h4 {
+  font-size: clamp(9px, 0.9vw, 11px);
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  margin: 0 0 4px 0;
+}
+.ts-col p {
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 600;
+  margin: 0;
+}
+.ts-col-right {
+  text-align: right;
+}
+
 /* ─── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .ts-sub { flex-direction: column; gap: 16px; }
   .ts-arrow { display: none; }
   .ts-sub-text { max-width: 100%; }
-  .ts-tech-desc { margin-left: 0; }
+
+  .ts-combined-images { flex-direction: column; }
+  .ts-combined-left { flex: none; width: 100%; height: 45vh; }
+  .ts-combined-right { flex: none; width: 100%; height: 40vh; }
+  .ts-team-img-wrapper { height: 100%; }
+  .ts-footer-links { flex-direction: column; gap: 24px; }
+  .ts-col-right { text-align: left; }
 }

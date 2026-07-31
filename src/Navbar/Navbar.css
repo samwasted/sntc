@@ -6,15 +6,14 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0;
+  padding: 0; /* full-width at top of page */
   pointer-events: none;
-  /* CSS transition drives the padding collapse */
   transition: padding 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ── Scrolled: shrink wrapper padding → nav appears as pill ──── */
 .navbar-wrapper[data-scrolled="1"] {
-  padding: 12px 30%;
+  padding: 12px 36%; /* tighter pill on scroll */
 }
 
 /* ── Inner nav bar ───────────────────────────────────────────── */
