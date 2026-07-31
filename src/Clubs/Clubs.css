@@ -245,3 +245,57 @@
   transform: translateY(-2px);
   background: #e4e4e7;
 }
+
+/* --- RESPONSIVE LAYOUT --- */
+@media (max-width: 900px) {
+  .clubs-container {
+    --wheel-orbit: 35vh;
+  }
+
+  /* Move the wheel center exactly to the bottom edge of the screen */
+  .wheel-scene {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    /* translate Y by 50% pushes the center of the wheel exactly to bottom: 0 */
+    transform: translate(-50%, 50%) rotate(-90deg);
+  }
+
+  /* Move the ambient glow to the bottom edge to match the wheel */
+  .clubs-ambient-glow {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 120vw;
+    height: 60vh;
+  }
+
+  /* Counter-rotate the text so it stays upright */
+  .wheel-item-text {
+    transform: rotate(90deg);
+  }
+
+  /* Move the info card to the top center with more breathing room */
+  .content-card {
+    top: 10vh;
+    right: 5vw;
+    left: 5vw;
+    width: 90vw;
+    height: auto;
+    transform: none; /* overrides translateY(-50%) */
+    padding: 1.5rem;
+    background: rgba(13, 13, 14, 0.85); /* semi-transparent to show stars */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .card-title {
+    font-size: 1.6rem;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+  }
+}
