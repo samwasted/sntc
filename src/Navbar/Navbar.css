@@ -1,101 +1,144 @@
+/* ── Outer wrapper: always fixed, full-width ─────────────────── */
 .navbar-wrapper {
   position: fixed;
-  top: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0; left: 0; right: 0;
   z-index: 1000;
-  width: max-content;
-  max-width: calc(100vw - 2rem);
-  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+  pointer-events: none;
+  /* CSS transition drives the padding collapse */
+  transition: padding 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-pill-navbar {
+/* ── Scrolled: shrink wrapper padding → nav appears as pill ──── */
+.navbar-wrapper[data-scrolled="1"] {
+  padding: 12px 30%;
+}
+
+/* ── Inner nav bar ───────────────────────────────────────────── */
+.nav-inner {
+  pointer-events: auto;
+  flex: 1;
+  height: 52px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.5rem;
-  background: rgba(10, 14, 26, 0.65);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  justify-content: space-between;
+  padding: 0 40px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+
+  transition:
+    border-radius   0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    background      0.45s ease,
+    backdrop-filter 0.45s ease,
+    border-color    0.45s ease,
+    box-shadow      0.45s ease,
+    padding         0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    height          0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scrolled inner: pill shape + glass background */
+.navbar-wrapper[data-scrolled="1"] .nav-inner {
+  height: 42px;
+  padding: 0 6px;
   border-radius: 9999px;
-  box-shadow: 
-    0 10px 30px -10px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-    0 0 20px rgba(13, 71, 161, 0.15);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.glass-pill-navbar:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 12px 36px -10px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-    0 0 25px rgba(13, 71, 161, 0.25);
+/* ── Brand ───────────────────────────────────────────────────── */
+.nav-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
+  opacity: 1;
+  max-width: 100px;
+  overflow: hidden;
+  transition:
+    opacity     0.35s ease,
+    max-width   0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    margin      0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Nav Links List */
+/* hide brand in pill */
+.navbar-wrapper[data-scrolled="1"] .nav-brand {
+  opacity: 0;
+  max-width: 0;
+  margin-right: 0;
+}
+
+/* ── Links list ──────────────────────────────────────────────── */
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* ── Individual link button ──────────────────────────────────── */
 .nav-link {
   position: relative;
   background: transparent;
   border: none;
   outline: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: widescreen-ex, sans-serif;
-  font-size: 0.825rem;
-  font-weight: 700;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.55rem 1rem;
+  padding: 0.45rem 0.9rem;
   border-radius: 9999px;
   cursor: pointer;
-  transition: color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
   white-space: nowrap;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-link.active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.14);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  color: #fff;
 }
 
-.active-pill-glow {
+.active-dot {
   position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3) inset;
-  pointer-events: none;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.8;
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 640px) {
-  .navbar-wrapper {
-    top: 0.75rem;
-    max-width: calc(100vw - 1rem);
-  }
-
-  .glass-pill-navbar {
-    gap: 0.35rem;
-    padding: 0.35rem;
-  }
-
-  .nav-link {
-    font-size: 0.7rem;
-    padding: 0.45rem 0.65rem;
-  }
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .navbar-wrapper[data-scrolled="1"] { padding: 10px 12%; }
+}
+@media (max-width: 640px) {
+  .nav-inner { padding: 0 16px; }
+  .navbar-wrapper[data-scrolled="1"] { padding: 10px 5%; }
+  .nav-link { font-size: 0.62rem; padding: 0.4rem 0.5rem; }
 }
