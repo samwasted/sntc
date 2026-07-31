@@ -1,0 +1,247 @@
+:root {
+  --wheel-orbit: 44vh;
+  --accent-red: rgba(255, 40, 60, 0.9);
+  --accent-red-glow: rgba(255, 40, 60, 0.4);
+  --light-blue: rgba(60, 180, 255, 0.9);
+  --light-blue-glow: rgba(60, 180, 255, 0.3);
+  --heavy-blue: #050a14;
+}
+
+.clubs-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--heavy-blue);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- BACKGROUND STARS & AMBIENT GLOW --- */
+.clubs-star-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.clubs-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: -10vh;
+  transform: translateY(-50%);
+  width: 70vh;
+  height: 70vh;
+  background: radial-gradient(circle, var(--accent-red-glow) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+}
+
+/* --- ROTARY WHEEL DIAL --- */
+.wheel-scene {
+  position: absolute;
+  top: 50%;
+  left: -28vh;
+  transform: translateY(-50%);
+  width: calc(var(--wheel-orbit) * 2 + 16vh);
+  height: calc(var(--wheel-orbit) * 2 + 16vh);
+  z-index: 10;
+  perspective: 1200px;
+}
+
+.dial-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.physical-base, .physical-rim {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.physical-base {
+  width: calc(var(--wheel-orbit) * 2);
+  height: calc(var(--wheel-orbit) * 2);
+  border: 1px solid rgba(60, 180, 255, 0.15);
+  background: radial-gradient(circle, rgba(15,20,40,0.8) 0%, var(--heavy-blue) 100%);
+  pointer-events: none;
+}
+
+.physical-rim {
+  width: calc(var(--wheel-orbit) * 2 + 4vh);
+  height: calc(var(--wheel-orbit) * 2 + 4vh);
+  border: 1px dashed var(--light-blue-glow);
+  pointer-events: none;
+}
+
+.wheel-dial {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+}
+
+/* Ticks */
+.wheel-tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  transform-origin: 0% 0%;
+}
+
+.wheel-tick.major {
+  width: 16px;
+  height: 2px;
+  background: var(--light-blue);
+}
+
+/* Wheel Text Items */
+.wheel-dial-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.wheel-item-text {
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: color 0.3s, text-shadow 0.3s; 
+}
+
+.wheel-item-text span {
+  font-size: 0.85rem;
+  color: var(--light-blue);
+  font-family: monospace;
+}
+
+/* HUD Pointer Bracket */
+.wheel-pointer-wrapper {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + var(--wheel-orbit) + 8vh);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.wheel-pointer-line {
+  width: 30px;
+  height: 2px;
+  background: var(--accent-red);
+  box-shadow: 0 0 10px var(--accent-red);
+}
+
+.wheel-pointer-bracket {
+  width: 10px;
+  height: 28px;
+  border: 2px solid var(--accent-red);
+  border-left: none;
+  margin-left: 4px;
+}
+
+/* --- DYNAMIC CONTENT CARD --- */
+.content-card {
+  position: absolute;
+  top: 50%;
+  right: 10vw;
+  transform: translateY(-50%);
+  width: 420px;
+  height: 520px;
+  background: #0d0d0e;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.card-bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(5,5,5,0.95) 100%),
+              radial-gradient(circle at 50% 20%, var(--accent-red-glow) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.card-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--light-blue);
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+}
+
+.card-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: #888888;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.8rem;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+  
+  /* Reset button defaults */
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  background: #e4e4e7;
+}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './Navbar/Navbar';
 import Achievements from './Achievements/Achievements';
 import Home from './Home/Home';
+import Clubs from './Clubs/Clubs';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gsap from 'gsap';
 
@@ -24,6 +25,7 @@ function App() {
       <Navbar activeTab={activeTab} setActiveTab={handleTabChange} />
 
       {activeTab === 'home'         && <Home />}
+      {activeTab === 'clubs'        && <Clubs />}
       {activeTab === 'achievements' && <Achievements />}
     </>
   );
