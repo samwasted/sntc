@@ -16,7 +16,7 @@ const TIER_EMOJI = { gold: "🥇", silver: "🥈", bronze: "🥉" };
 const TIER_LABEL = { gold: "1ST PLACE", silver: "2ND PLACE", bronze: "3RD PLACE" };
 
 /* ─── Achievement Card (Photo Background) ──────────────── */
-function AchievementCard({ title, subtitle, tier, image, size = "small" }) {
+function AchievementCard({ title, subtitle, tier, image, size = "small", index = 0 }) {
   const imgUrl = image;
 
   const handleMouseMove = (e) => {
@@ -35,6 +35,7 @@ function AchievementCard({ title, subtitle, tier, image, size = "small" }) {
   return (
     <figure
       className={`item item--${size} item--${tier}`}
+      style={{ "--card-index": index }}
       onMouseEnter={handleMouseMove}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -44,17 +45,26 @@ function AchievementCard({ title, subtitle, tier, image, size = "small" }) {
         <span>{TIER_EMOJI[tier]} {TIER_LABEL[tier]}</span>
       </div>
 
-      {/* Glitch layers — using the photo */}
-      <div className="item__img glitch" style={{ "--img": `url(${imgUrl})` }}>
-        <div className="glitch__img"></div>
-        <div className="glitch__img"></div>
-        <div className="glitch__img"></div>
-        <div className="glitch__img"></div>
-        <div className="glitch__img"></div>
-      </div>
+      {/* Blue Curtain Wall Reveal */}
+      <div className="item__reveal-curtain"></div>
 
-      {/* Cover — fades out on hover */}
-      <div className="item__cover" style={{ backgroundImage: `url(${imgUrl})` }}></div>
+      {/* Media container for zoom-out reveal */}
+      <div className="item__media">
+        {/* Glitch layers — using the photo */}
+        <div className="item__img glitch" style={{ "--img": `url(${imgUrl})` }}>
+          <div className="glitch__img"></div>
+          <div className="glitch__img"></div>
+          <div className="glitch__img"></div>
+          <div className="glitch__img"></div>
+          <div className="glitch__img"></div>
+        </div>
+
+        {/* Cover — fades out on hover */}
+        <div className="item__cover" style={{ backgroundImage: `url(${imgUrl})` }}></div>
+
+        {/* Dark shadow overlay under curtain */}
+        <div className="item__overlay-shadow"></div>
+      </div>
 
       {/* Text overlay — event name top-left, category bottom-right */}
       <figcaption className="item__content item__content--image">
@@ -93,7 +103,7 @@ export default function Achievements() {
 
       <div className="content">
         {achievements.map((a, i) => (
-          <AchievementCard key={i} {...a} />
+          <AchievementCard key={i} index={i} {...a} />
         ))}
       </div>
     </main>
