@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ─── Pinned section ─────────────────────────────────────────── */
+.ts-section {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ts-inner {
+  width: 100%;
+  padding: 0 clamp(20px, 4vw, 56px);
+}
+
+/* ─── Giant display lines ────────────────────────────────────── */
+.ts-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25em;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ts-line--1 {
+  font-size: clamp(64px, 13vw, 180px);
+  position: relative;
+}
+
+.ts-line--2 {
+  font-size: clamp(48px, 9.5vw, 130px);
+  margin-top: -0.02em;
+}
+
+.ts-line--3 {
+  font-size: clamp(52px, 10.5vw, 145px);
+  margin-top: -0.02em;
+}
+
+/* ─── Pixel / 8-bit font for "INNOVATION" ────────────────────── */
+.ts-pixel {
+  font-family: 'Press Start 2P', monospace;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.08em;
+  display: inline-block;
+  transform: skewX(-10deg);
+}
+
+/* ─── Letter pieces ──────────────────────────────────────────── */
+/* Row 1 'WE IGNITE' is handled natively via SVG in the component */
+
+/* THAT shrinks from its left edge — left edge stays fixed */
+.ts-that {
+  display: inline-block;
+  will-change: transform, letter-spacing;
+}
+
+/* LASTS grows from its right edge — right edge stays fixed */
+.ts-lasts {
+  display: inline-block;
+  transform-origin: right center;
+  will-change: transform;
+}
+
+/* ─── Sub copy ───────────────────────────────────────────────── */
+.ts-sub {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 3vw, 48px);
+  margin-top: clamp(32px, 4vh, 56px);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.ts-sub-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(11px, 1.1vw, 14px);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
+  max-width: 260px;
+  margin: 0;
+}
+
+.ts-arrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.45);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+ *  SECTION 2 — Technex reveal
+ * ══════════════════════════════════════════════════════════════ */
+.ts-section--tech {
+  background: #000;
+}
+
+.ts-section--tech .ts-inner {
+  padding-top: 8vh;
+}
+
+.ts-tech-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 5px 12px;
+  border-radius: 4px;
+  margin-bottom: 28px;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.ts-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffb74d;
+  flex-shrink: 0;
+}
+
+.ts-tech-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(48px, 9vw, 130px);
+  color: #fff;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin: 0 0 clamp(28px, 4vh, 48px) 0;
+  max-width: 80%;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.ts-tech-desc {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 520px;
+  margin-left: clamp(0px, 20vw, 360px);
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.ts-tech-divider {
+  width: 1px;
+  min-height: 80px;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.ts-tech-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(13px, 1.2vw, 16px);
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .ts-sub { flex-direction: column; gap: 16px; }
+  .ts-arrow { display: none; }
+  .ts-sub-text { max-width: 100%; }
+  .ts-tech-desc { margin-left: 0; }
+}
