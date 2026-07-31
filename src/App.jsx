@@ -1,7 +1,13 @@
+import Navbar from "./Navbar/Navbar";
 import Achievements from "./Achievements/Achievements";
 
 function App() {
-  return <Achievements />;
+  return (
+    <>
+      <Navbar />
+      <Achievements />
+    </>
+  );
 }
 
 export default App;

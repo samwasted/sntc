@@ -1,0 +1,101 @@
+.navbar-wrapper {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  pointer-events: auto;
+}
+
+.glass-pill-navbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  background: rgba(10, 14, 26, 0.65);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 0 20px rgba(13, 71, 161, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pill-navbar:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 12px 36px -10px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 0 25px rgba(13, 71, 161, 0.25);
+}
+
+/* Nav Links List */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  position: relative;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: widescreen-ex, sans-serif;
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: color 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.active-pill-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3) inset;
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 640px) {
+  .navbar-wrapper {
+    top: 0.75rem;
+    max-width: calc(100vw - 1rem);
+  }
+
+  .glass-pill-navbar {
+    gap: 0.35rem;
+    padding: 0.35rem;
+  }
+
+  .nav-link {
+    font-size: 0.7rem;
+    padding: 0.45rem 0.65rem;
+  }
+}
