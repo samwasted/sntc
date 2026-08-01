@@ -1,7 +1,7 @@
 :root {
-  --wheel-orbit: 44vh;
-  --accent-red: rgba(255, 40, 60, 0.9);
-  --accent-red-glow: rgba(255, 40, 60, 0.4);
+  --wheel-orbit: 44vmin;
+  --accent-red: rgba(60, 180, 255, 0.9);
+  --accent-red-glow: rgba(60, 180, 255, 0.35);
   --light-blue: rgba(60, 180, 255, 0.9);
   --light-blue-glow: rgba(60, 180, 255, 0.3);
   --heavy-blue: #050a14;
@@ -121,12 +121,12 @@
 }
 
 .wheel-item-text {
-  font-size: 1.6rem;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
   gap: 1rem;
-  transition: color 0.3s, text-shadow 0.3s; 
+  transition: color 0.3s, text-shadow 0.3s;
 }
 
 .wheel-item-text span {
@@ -241,15 +241,34 @@
   font-family: inherit;
 }
 
-.cta-button:hover {
-  transform: translateY(-2px);
-  background: #e4e4e7;
+@media (hover: hover) and (pointer: fine) {
+  .cta-button:hover {
+    transform: translateY(-2px);
+    background: #e4e4e7;
+  }
+}
+
+/* --- MEDIUM / TABLET WIDTH (between phone & full desktop) --- */
+@media (max-width: 1300px) and (min-width: 901px) {
+  .clubs-container {
+    --wheel-orbit: 36vmin;
+  }
+
+  /* Push wheel further left so text items don't run into the card */
+  .wheel-scene {
+    left: -38vh;
+  }
+
+  /* Glow follows wheel left */
+  .clubs-ambient-glow {
+    left: -16vh;
+  }
 }
 
 /* --- RESPONSIVE LAYOUT --- */
 @media (max-width: 900px) {
   .clubs-container {
-    --wheel-orbit: 35vh;
+    --wheel-orbit: 32vmin;
   }
 
   /* Move the wheel center exactly to the bottom edge of the screen */
@@ -276,6 +295,11 @@
     transform: rotate(90deg);
   }
 
+  /* Hide the pointer bracket — its absolute position breaks on mobile */
+  .wheel-pointer-wrapper {
+    display: none;
+  }
+
   /* Move the info card to the top center with more breathing room */
   .content-card {
     top: 10vh;
@@ -283,6 +307,8 @@
     left: 5vw;
     width: 90vw;
     height: auto;
+    max-height: 55vh;
+    overflow-y: auto;
     transform: none; /* overrides translateY(-50%) */
     padding: 1.5rem;
     background: rgba(13, 13, 14, 0.85); /* semi-transparent to show stars */
@@ -297,5 +323,42 @@
   .card-desc {
     font-size: 0.85rem;
     margin-bottom: 1.2rem;
+  }
+}
+
+/* --- Small phones --- */
+@media (max-width: 480px) {
+  .clubs-container {
+    --wheel-orbit: 28vmin;
+  }
+
+  .content-card {
+    top: 8vh;
+    padding: 1.2rem;
+    max-height: 48vh;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-tag {
+    font-size: 0.65rem;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .cta-button {
+    padding: 0.7rem 1.4rem;
+    font-size: 0.8rem;
+  }
+
+  .wheel-item-text {
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    gap: 0.5rem;
   }
 }
