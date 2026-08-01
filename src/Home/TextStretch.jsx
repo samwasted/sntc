@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './TextStretch.css';
@@ -37,7 +37,7 @@ export default function TextStretch() {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
 
       /* ────────────────────────────────────────────────────────────
@@ -99,12 +99,16 @@ export default function TextStretch() {
 
       // ── Phase A: Images drop one by one ───────────────────────
       const images = craftImagesRef.current;
+      const isMobile = window.innerWidth <= 900;
+
       if (images.length > 0) {
         tl2.from(images, {
           stagger: 0.65,
-          y: -window.innerHeight,
-          rotation: () => gsap.utils.random(-25, 25),
-          transformOrigin: '50% 0%',
+          // On mobile fly in from the right so cards never pass over the text
+          ...(isMobile
+            ? { x: window.innerWidth, rotation: () => gsap.utils.random(-10, 10), transformOrigin: 'right center' }
+            : { y: -window.innerHeight, rotation: () => gsap.utils.random(-25, 25), transformOrigin: '50% 0%' }
+          ),
           duration: 1.5,
           ease: 'power3.out'
         }, 0);
@@ -133,8 +137,9 @@ export default function TextStretch() {
         2.8);
 
       // 3. Craft grid shrinks to final footer height
+      //    Mobile: keep it small so SNTC TEAM text fits below it
       tl2.to(craftGridRef.current, {
-        height: 'calc(62vh - 52px)',
+        height: isMobile ? '18vh' : 'calc(62vh - 52px)',
         duration: 1.2,
         ease: 'power3.out'
       }, 2.8);

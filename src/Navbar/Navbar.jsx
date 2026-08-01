@@ -1,15 +1,16 @@
 import React, { useEffect, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 const navItems = [
-  { id: 'home',         label: 'Home' },
-  { id: 'clubs',        label: 'Clubs' },
-  { id: 'activities',   label: 'Activities' },
-  { id: 'achievements', label: 'Achievements' },
-  { id: 'team',         label: 'Team' },
+  { id: 'home',         label: 'Home',         to: '/' },
+  { id: 'clubs',        label: 'Clubs',        to: '/clubs' },
+  // { id: 'activities', label: 'Activities',  to: '/activities' },
+  { id: 'achievements', label: 'Achievements', to: '/achievements' },
+  { id: 'team',         label: 'Team',         to: '/team' },
 ];
 
-export default function Navbar({ activeTab, setActiveTab }) {
+export default function Navbar() {
   const wrapRef = useRef(null);
 
   useEffect(() => {
@@ -30,14 +31,20 @@ export default function Navbar({ activeTab, setActiveTab }) {
         <ul className="navbar-links">
           {navItems.map((item) => (
             <li key={item.id}>
-              <button
-                type="button"
-                className={`nav-link ${activeTab === item.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(item.id)}
+              <NavLink
+                to={item.to}
+                end={item.to === '/'}
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
               >
-                {item.label}
-                {activeTab === item.id && <span className="active-dot" />}
-              </button>
+                {({ isActive }) => (
+                  <>
+                    {item.label}
+                    {isActive && <span className="active-dot" />}
+                  </>
+                )}
+              </NavLink>
             </li>
           ))}
         </ul>

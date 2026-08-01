@@ -2,12 +2,18 @@ import { useEffect, useRef } from 'react';
 
 const SPOTLIGHT_R = 260;
 
+// Detect touch-only devices once at module level
+const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
+
 export default function RevealLayer({ image }) {
   const divRef    = useRef(null);
   const mouseRef  = useRef({ x: -9999, y: -9999 });
   const smoothRef = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
+    // No cursor on touch devices — skip entirely
+    if (isTouch) return;
+
     const div = divRef.current;
     if (!div) return;
 
@@ -48,6 +54,9 @@ export default function RevealLayer({ image }) {
       cancelAnimationFrame(rafId);
     };
   }, []);
+
+  // Don't render anything on touch devices
+  if (isTouch) return null;
 
   return (
     <div

@@ -95,9 +95,11 @@ export default function Clubs() {
     });
   }, [updateWheelLayout]);
 
-  // Handle wheel scrolling
+  // Handle wheel scrolling + mobile touch swipe
   useEffect(() => {
     let isScrolling = false;
+    let touchStartY = 0;
+
     const handleWheel = (e) => {
       // Ignore tiny touchpad wiggles
       if (Math.abs(e.deltaY) < 20) return;
@@ -115,8 +117,39 @@ export default function Clubs() {
       setTimeout(() => { isScrolling = false; }, 600);
     };
 
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e) => {
+      if (isScrolling) return;
+      const deltaY = touchStartY - e.changedTouches[0].clientY;
+
+      // Ignore tiny swipes (< 30px)
+      if (Math.abs(deltaY) < 30) return;
+
+      isScrolling = true;
+
+      if (deltaY > 0 && currentIndex < clubsData.length - 1) {
+        // Swipe up → next item
+        rotateTo(currentIndex + 1);
+      } else if (deltaY < 0 && currentIndex > 0) {
+        // Swipe down → previous item
+        rotateTo(currentIndex - 1);
+      }
+
+      setTimeout(() => { isScrolling = false; }, 700);
+    };
+
     window.addEventListener('wheel', handleWheel);
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
   }, [currentIndex, rotateTo]);
 
   // Initial layout calculation
