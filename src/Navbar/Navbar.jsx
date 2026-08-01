@@ -9,8 +9,18 @@ const navItems = [
   { id: 'team', label: 'Team' },
 ];
 
-export default function Navbar() {
-  const [activeTab, setActiveTab] = useState('achievements');
+export default function Navbar({ activeTab: externalActiveTab, onTabChange }) {
+  const [internalActiveTab, setInternalActiveTab] = useState('team');
+
+  const activeTab = externalActiveTab !== undefined ? externalActiveTab : internalActiveTab;
+
+  const handleTabClick = (id) => {
+    if (onTabChange) {
+      onTabChange(id);
+    } else {
+      setInternalActiveTab(id);
+    }
+  };
 
   return (
     <header className="navbar-wrapper">
@@ -21,7 +31,7 @@ export default function Navbar() {
               <button
                 type="button"
                 className={`nav-link ${activeTab === item.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => handleTabClick(item.id)}
               >
                 {item.label}
                 {activeTab === item.id && (
