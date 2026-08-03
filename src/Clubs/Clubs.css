@@ -237,6 +237,7 @@
   transform: translateY(-50%);
   width: 420px;
   height: 520px;
+  max-height: 80vh;
   background: #000;
   border-radius: 2px;
   /* 1px solid gold stroke — the main visual separator */
@@ -280,7 +281,7 @@
 /* Club name — heavy Inter matching "WE IGNITE" on home page */
 .card-title {
   font-family: 'Inter', sans-serif;
-  font-size: 2.4rem;
+  font-size: clamp(1.6rem, 2.2vw, 2.4rem);
   font-weight: 900;
   margin-bottom: 1rem;
   letter-spacing: -0.03em;
@@ -289,7 +290,7 @@
 }
 
 .card-desc {
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 0.9vw, 0.9rem);
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.65;
   margin-bottom: 2rem;
@@ -325,41 +326,110 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TABLET (900–1300 px)
+   MID DESKTOP ADAPTIVE SCALING (1041px – 1500px)
 ───────────────────────────────────────────────────────────── */
-@media (max-width: 1300px) and (min-width: 901px) {
+@media (min-width: 1041px) and (max-width: 1500px) {
   .clubs-container {
-    --wheel-orbit: 36vmin;
+    --wheel-orbit: clamp(28vmin, 33vmin, 39vmin);
   }
 
   .wheel-scene {
-    left: -38vh;
+    left: -22vh;
+  }
+
+  .center-logo-wrapper {
+    width: clamp(200px, 22vw, 230px);
+    height: clamp(200px, 22vw, 230px);
+  }
+
+  .content-card {
+    right: 4vw;
+    width: clamp(300px, 28vw, 380px);
+    padding: 1.8rem;
+  }
+
+  .club-title-text {
+    max-width: clamp(150px, 17vw, 230px);
+    font-size: clamp(0.9rem, 1.4vw, 1.15rem);
   }
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MOBILE (≤ 900 px)
+   COMPACT DESKTOP / TABLET STATE (840px – 1040px)
 ───────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (min-width: 840px) and (max-width: 1040px) {
   .clubs-container {
-    --wheel-orbit: 36vmin;
+    --wheel-orbit: clamp(22vmin, 25vmin, 28vmin);
+  }
+
+  .wheel-scene {
+    left: -18vh;
+  }
+
+  .center-logo-wrapper {
+    width: 175px;
+    height: 175px;
+  }
+
+  .content-card {
+    right: 2.5vw;
+    width: clamp(260px, 28vw, 320px);
+    height: 460px;
+    max-height: 78vh;
+    padding: 1.3rem 1.5rem;
+  }
+
+  .card-title {
+    font-size: clamp(1.3rem, 1.8vw, 1.75rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .card-desc {
+    font-size: 0.8rem;
+    line-height: 1.55;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-tag {
+    font-size: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .cta-button {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.78rem;
+  }
+
+  .club-title-text {
+    max-width: clamp(110px, 14vw, 160px);
+    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE (≤ 840 px)
+───────────────────────────────────────────────────────────── */
+@media (max-width: 840px) {
+  .clubs-container {
+    --wheel-orbit: 27vmin;
   }
 
   .wheel-scene {
     top: auto;
-    bottom: 0;
+    bottom: -2vh;
     left: 50%;
-    transform: translate(-50%, 32%) rotate(-90deg);
+    transform: translate(-50%, 38%) rotate(-90deg);
   }
 
   .center-logo-wrapper {
     transform: translate(-50%, -50%) rotate(90deg);
-    width: 190px;
-    height: 190px;
+    width: 155px;
+    height: 155px;
   }
 
   .wheel-item-text {
     transform: rotate(90deg);
+    font-size: clamp(0.8rem, 2.8vw, 1.05rem);
   }
 
   .wheel-pointer-wrapper {
@@ -367,27 +437,28 @@
   }
 
   .content-card {
-    top: 75px;
+    top: 70px;
     right: 4vw;
     left: 4vw;
     width: 92vw;
     height: auto;
-    max-height: 40vh;
+    max-height: 38vh;
     overflow-y: hidden;
     transform: none;
-    padding: 1.2rem 1.4rem;
+    padding: 1.1rem 1.3rem;
     /* Keep sharp border on mobile too */
     background: #000;
   }
 
   .card-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.35rem;
+    margin-bottom: 0.4rem;
   }
 
   .card-desc {
-    font-size: 0.8rem;
-    margin-bottom: 1rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.5;
   }
 }
 
