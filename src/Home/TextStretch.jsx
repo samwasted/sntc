@@ -304,16 +304,16 @@ export default function TextStretch() {
           <div className="ts-col">
             <h4>SOCIAL MEDIA</h4>
             <div className="footer-social-links">
-              <a href="#" className="footer-social-link" onClick={(e) => e.preventDefault()}>INSTAGRAM</a>
+              <a href="https://www.instagram.com/sntc.iitbhu/?hl=en" target="_blank" rel="noopener noreferrer" className="footer-social-link">INSTAGRAM</a>
               <span className="social-sep">—</span>
-              <a href="#" className="footer-social-link" onClick={(e) => e.preventDefault()}>LINKEDIN</a>
+              <a href="https://www.linkedin.com/company/science-and-technology-council-iit-bhu-varanasi/?originalSubdomain=in" target="_blank" rel="noopener noreferrer" className="footer-social-link">LINKEDIN</a>
               <span className="social-sep">—</span>
-              <a href="#" className="footer-social-link" onClick={(e) => e.preventDefault()}>FACEBOOK</a>
+              <a href="https://www.facebook.com/sntc.iitbhu/" target="_blank" rel="noopener noreferrer" className="footer-social-link">FACEBOOK</a>
             </div>
           </div>
           <div className="ts-col">
             <h4>GET IN TOUCH</h4>
-            <p>HELLO@SNTC.IITBHU.AC.IN</p>
+            <p><a href="mailto:gensec.sntc@iitbhu.ac.in" style={{ color: 'inherit', textDecoration: 'none' }}>GENSEC.SNTC@IITBHU.AC.IN</a></p>
           </div>
           <div className="ts-col ts-col-right">
             <h4>@SNTC IIT BHU 2026</h4>
