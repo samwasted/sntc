@@ -7,49 +7,57 @@ const clubsData = [
     id: "01",
     title: "Aero Modelling Club",
     tag: "CLUB 01 // AEROSPACE",
-    desc: "Design, build, and fly model aircraft while exploring aerodynamics, propulsion, and flight engineering."
+    desc: "Design, build, and fly model aircraft while exploring aerodynamics, propulsion, and flight engineering.",
+    logo: "https://picsum.photos/seed/aero/300/300"
   },
   {
     id: "02",
     title: "Astronomy Club",
     tag: "CLUB 02 // COSMOS",
-    desc: "Explore astronomy through telescope observations, astrophysics discussions, and skywatching sessions."
+    desc: "Explore astronomy through telescope observations, astrophysics discussions, and skywatching sessions.",
+    logo: "https://picsum.photos/seed/astro/300/300"
   },
   {
     id: "03",
     title: "Business Club",
     tag: "CLUB 03 // ENTREPRENEURSHIP",
-    desc: "Develop business acumen through case competitions, consulting, finance, startups, and leadership initiatives."
+    desc: "Develop business acumen through case competitions, consulting, finance, startups, and leadership initiatives.",
+    logo: "https://picsum.photos/seed/business/300/300"
   },
   {
     id: "04",
     title: "Club Of Programmers",
     tag: "CLUB 04 // SOFTWARE",
-    desc: "Competitive programming, software development, open-source contributions, and hackathons."
+    desc: "Competitive programming, software development, open-source contributions, and hackathons.",
+    logo: "https://picsum.photos/seed/cop/300/300"
   },
   {
     id: "05",
     title: "Club of Sustainability and Innovation",
     tag: "CLUB 05 // SUSTAINABILITY",
-    desc: "Drive innovative solutions for environmental challenges through sustainability-focused projects and initiatives."
+    desc: "Drive innovative solutions for environmental challenges through sustainability-focused projects and initiatives.",
+    logo: "https://picsum.photos/seed/csi/300/300"
   },
   {
     id: "06",
     title: "Robotics Club",
     tag: "CLUB 06 // ROBOTICS",
-    desc: "Build intelligent robots, autonomous systems, drones, and embedded hardware for competitions and research."
+    desc: "Build intelligent robots, autonomous systems, drones, and embedded hardware for competitions and research.",
+    logo: "https://picsum.photos/seed/robotics/300/300"
   },
   {
     id: "07",
     title: "The Quant Club",
     tag: "CLUB 07 // QUANTITATIVE FINANCE",
-    desc: "Explore quantitative finance, algorithmic trading, machine learning, and mathematical modeling."
+    desc: "Explore quantitative finance, algorithmic trading, machine learning, and mathematical modeling.",
+    logo: "https://picsum.photos/seed/quant/300/300"
   },
   {
     id: "08",
     title: "Society of Automotive Engineering Collegiate Club",
     tag: "CLUB 08 // AUTOMOTIVE",
-    desc: "Design, manufacture, and test innovative vehicles while gaining hands-on automotive engineering experience."
+    desc: "Design, manufacture, and test innovative vehicles while gaining hands-on automotive engineering experience.",
+    logo: "https://picsum.photos/seed/sae/300/300"
   }
 ];
 
@@ -333,7 +341,18 @@ export default function Clubs() {
         style={{ touchAction: 'none' }}
       >
         <div className="dial-container">
-          <div className="physical-base" />
+          <div className="physical-base">
+            <div className="center-logo-wrapper">
+              {clubsData.map((club, index) => (
+                <img
+                  key={`logo-${club.id}`}
+                  src={club.logo}
+                  alt={club.title}
+                  className={`center-logo ${currentIndex === index ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
           <div className="physical-rim" />
           
           <div ref={wheelDialRef} className="wheel-dial">
