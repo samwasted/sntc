@@ -95,10 +95,10 @@ a {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  a:hover {
-    color: var(--color-link-hover);
-    outline: none;
-  }
+	a:hover {
+		color: var(--color-link-hover);
+		outline: none;
+	}
 }
 
 /* Better focus styles from https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
@@ -240,6 +240,7 @@ a:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
+
 	.intro__button:hover,
 	.intro__button:focus {
 		transform: translate3d(1px, 2px, 0);
@@ -338,11 +339,11 @@ a:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .item:hover .item__img {
-    opacity: 1;
-    transition: transform 0.65s var(--rotate-easing), opacity var(--fade-out-time) var(--fade-out-easing);
-    transform: translate3d(var(--mouse-x, 0px), var(--mouse-y, 0px), -200px) rotateX(55deg) rotateY(0) rotateZ(-30deg);
-  }
+	.item:hover .item__img {
+		opacity: 1;
+		transition: transform 0.65s var(--rotate-easing), opacity var(--fade-out-time) var(--fade-out-easing);
+		transform: translate3d(var(--mouse-x, 0px), var(--mouse-y, 0px), -200px) rotateX(55deg) rotateY(0) rotateZ(-30deg);
+	}
 }
 
 .glitch {
@@ -390,32 +391,33 @@ a:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  /* On hover we show the 2nd, 3rd, 4th and 5th image*/
-  .item:hover .glitch__img:nth-child(n+2) {
-    opacity: 1;
-    transition: opacity var(--fade-out-time) var(--fade-out-easing);
-  }
 
-  /* Hover animations for horizontal case */
-  .item:hover .glitch__img:nth-child(2) {
-    transform: translate3d(var(--gap-horizontal), 0, 0);
-    animation: glitch-anim-1-horizontal var(--time-anim) infinite steps(2);
-  }
+	/* On hover we show the 2nd, 3rd, 4th and 5th image*/
+	.item:hover .glitch__img:nth-child(n+2) {
+		opacity: 1;
+		transition: opacity var(--fade-out-time) var(--fade-out-easing);
+	}
 
-  .item:hover .glitch__img:nth-child(3) {
-    transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0);
-    animation: glitch-anim-2-horizontal var(--time-anim) infinite steps(2);
-  }
+	/* Hover animations for horizontal case */
+	.item:hover .glitch__img:nth-child(2) {
+		transform: translate3d(var(--gap-horizontal), 0, 0);
+		animation: glitch-anim-1-horizontal var(--time-anim) infinite steps(2);
+	}
 
-  .item:hover .glitch__img:nth-child(4) {
-    transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0) scale3d(-1, -1, 1);
-    animation: glitch-anim-3-horizontal var(--time-anim) infinite steps(2);
-  }
+	.item:hover .glitch__img:nth-child(3) {
+		transform: translate3d(calc(-1 * var(--gap-horizontal)), 0, 0);
+		animation: glitch-anim-2-horizontal var(--time-anim) infinite steps(2);
+	}
 
-  /* Hover flash animation on last image */
-  .item:hover .glitch__img:nth-child(5) {
-    animation: glitch-anim-flash 0.5s steps(1, end) infinite;
-  }
+	.item:hover .glitch__img:nth-child(4) {
+		transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0) scale3d(-1, -1, 1);
+		animation: glitch-anim-3-horizontal var(--time-anim) infinite steps(2);
+	}
+
+	/* Hover flash animation on last image */
+	.item:hover .glitch__img:nth-child(5) {
+		animation: glitch-anim-flash 0.5s steps(1, end) infinite;
+	}
 }
 
 /* Animations */
@@ -889,6 +891,7 @@ a:focus-visible {
 	0% {
 		transform: translateX(0%);
 	}
+
 	100% {
 		transform: translateX(-101%);
 	}
@@ -898,6 +901,7 @@ a:focus-visible {
 	0% {
 		transform: scale(1.35);
 	}
+
 	100% {
 		transform: scale(1);
 	}
@@ -922,10 +926,10 @@ a:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .item:hover .item__cover {
-    opacity: 0;
-    transition: opacity var(--fade-out-time) var(--fade-out-easing);
-  }
+	.item:hover .item__cover {
+		opacity: 0;
+		transition: opacity var(--fade-out-time) var(--fade-out-easing);
+	}
 }
 
 .item__content {
@@ -956,10 +960,11 @@ a:focus-visible {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .item:hover .item__content-title,
-  .item:hover .item__content-label {
-    color: var(--content-hover);
-  }
+
+	.item:hover .item__content-title,
+	.item:hover .item__content-label {
+		color: var(--content-hover);
+	}
 }
 
 .item__content-label {
@@ -1040,24 +1045,25 @@ blockquote {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  /* Tier-specific text hover colors & subtle glows */
-  .item--gold:hover .item__event-name,
-  .item--gold:hover .item__category {
-    color: #f0c441;
-    text-shadow: 0 0 10px rgba(240, 196, 65, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
 
-  .item--silver:hover .item__event-name,
-  .item--silver:hover .item__category {
-    color: #e2e8f0;
-    text-shadow: 0 0 10px rgba(226, 232, 240, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
+	/* Tier-specific text hover colors & subtle glows */
+	.item--gold:hover .item__event-name,
+	.item--gold:hover .item__category {
+		color: #f0c441;
+		text-shadow: 0 0 10px rgba(240, 196, 65, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+	}
 
-  .item--bronze:hover .item__event-name,
-  .item--bronze:hover .item__category {
-    color: #e59866;
-    text-shadow: 0 0 10px rgba(229, 152, 102, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
-  }
+	.item--silver:hover .item__event-name,
+	.item--silver:hover .item__category {
+		color: #e2e8f0;
+		text-shadow: 0 0 10px rgba(226, 232, 240, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+	}
+
+	.item--bronze:hover .item__event-name,
+	.item--bronze:hover .item__category {
+		color: #e59866;
+		text-shadow: 0 0 10px rgba(229, 152, 102, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+	}
 }
 
 /* ─── Top-Right Corner Ribbon ─────────────────────────── */

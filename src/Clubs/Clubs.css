@@ -8,8 +8,8 @@
 }
 
 .clubs-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100dvh;
   background-color: var(--heavy-blue);
   color: #ffffff;
   position: relative;
@@ -180,6 +180,12 @@
   box-shadow: 0 30px 60px rgba(0,0,0,0.8);
   overflow: hidden;
   z-index: 10;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.content-card::-webkit-scrollbar {
+  display: none;
 }
 
 .card-bg-gradient {
@@ -268,16 +274,15 @@
 /* --- RESPONSIVE LAYOUT --- */
 @media (max-width: 900px) {
   .clubs-container {
-    --wheel-orbit: 32vmin;
+    --wheel-orbit: 36vmin;
   }
 
-  /* Move the wheel center exactly to the bottom edge of the screen */
+  /* Move the wheel center slightly up from bottom edge so it sits closer to card */
   .wheel-scene {
     top: auto;
-    bottom: 0;
+    bottom: -2vh;
     left: 50%;
-    /* translate Y by 50% pushes the center of the wheel exactly to bottom: 0 */
-    transform: translate(-50%, 50%) rotate(-90deg);
+    transform: translate(-50%, 45%) rotate(-90deg);
   }
 
   /* Move the ambient glow to the bottom edge to match the wheel */
@@ -300,65 +305,68 @@
     display: none;
   }
 
-  /* Move the info card to the top center with more breathing room */
+  /* Move the info card right below navbar with compact fit */
   .content-card {
-    top: 10vh;
-    right: 5vw;
-    left: 5vw;
-    width: 90vw;
+    top: 75px;
+    right: 4vw;
+    left: 4vw;
+    width: 92vw;
     height: auto;
-    max-height: 55vh;
-    overflow-y: auto;
+    max-height: 42vh;
+    overflow-y: hidden;
     transform: none; /* overrides translateY(-50%) */
-    padding: 1.5rem;
+    padding: 1.2rem 1.4rem;
     background: rgba(13, 13, 14, 0.85); /* semi-transparent to show stars */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
 
   .card-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .card-desc {
     font-size: 0.85rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
   }
 }
 
 /* --- Small phones --- */
 @media (max-width: 480px) {
   .clubs-container {
-    --wheel-orbit: 28vmin;
+    --wheel-orbit: 34vmin;
   }
 
   .content-card {
-    top: 8vh;
-    padding: 1.2rem;
-    max-height: 48vh;
+    top: 70px;
+    padding: 1rem 1.1rem;
+    max-height: 38vh;
   }
 
   .card-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.6rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
   }
 
   .card-tag {
     font-size: 0.65rem;
+    margin-bottom: 0.3rem;
   }
 
   .card-desc {
     font-size: 0.8rem;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.75rem;
   }
 
   .cta-button {
-    padding: 0.7rem 1.4rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.8rem;
   }
 
   .wheel-item-text {
-    font-size: clamp(0.75rem, 2.5vw, 1rem);
-    gap: 0.5rem;
+    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+    gap: 0.4rem;
   }
 }

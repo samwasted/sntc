@@ -69,13 +69,38 @@ export default function Clubs() {
     });
   }, []);
 
-  const rotateTo = useCallback((index) => {
-    setCurrentIndex(index);
-    const targetRotation = -index * angleStep;
+  const wheelSceneRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const wasPointerDraggingRef = useRef(false);
+  const dragStartAngleRef = useRef(0);
+  const dragStartRotRef = useRef(0);
+  const lastHapticIndexRef = useRef(0);
+
+  const triggerHaptic = useCallback(() => {
+    if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(10);
+      } catch (e) {
+        // ignore if unsupported
+      }
+    }
+  }, []);
+
+  const currentIndexRef = useRef(0);
+  currentIndexRef.current = currentIndex;
+
+  const rotateTo = useCallback((index, duration = 0.6) => {
+    const clampedIndex = Math.max(0, Math.min(clubsData.length - 1, index));
+    if (clampedIndex !== currentIndexRef.current) {
+      triggerHaptic();
+    }
+    setCurrentIndex(clampedIndex);
+    currentIndexRef.current = clampedIndex;
+    const targetRotation = -clampedIndex * angleStep;
     
     gsap.to(rotationObj.current, {
       rot: targetRotation,
-      duration: 0.8,
+      duration: duration,
       ease: "power2.out",
       onUpdate: () => {
         if (wheelDialRef.current) {
@@ -87,75 +112,143 @@ export default function Clubs() {
 
     gsap.to(".card-content-anim", { 
       opacity: 0, 
-      y: -10, 
-      duration: 0.2, 
+      y: -6, 
+      duration: 0.15, 
       onComplete: () => {
-        gsap.to(".card-content-anim", { opacity: 1, y: 0, duration: 0.4, stagger: 0.05 });
+        gsap.to(".card-content-anim", { opacity: 1, y: 0, duration: 0.3, stagger: 0.04 });
       }
     });
-  }, [updateWheelLayout]);
+  }, [updateWheelLayout, triggerHaptic]);
 
-  // Handle wheel scrolling + mobile touch swipe
+  const handlePointerDown = (e) => {
+    if (!wheelSceneRef.current) return;
+    const rect = wheelSceneRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    dragStartAngleRef.current = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+    dragStartRotRef.current = rotationObj.current.rot;
+    isDraggingRef.current = true;
+    wasPointerDraggingRef.current = true;
+    lastHapticIndexRef.current = currentIndexRef.current;
+
+    if (e.target.setPointerCapture && e.pointerId !== undefined) {
+      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDraggingRef.current || !wheelSceneRef.current) return;
+    const rect = wheelSceneRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+    let deltaAngle = currentAngle - dragStartAngleRef.current;
+    
+    if (deltaAngle > 180) deltaAngle -= 360;
+    if (deltaAngle < -180) deltaAngle += 360;
+
+    let newRot = dragStartRotRef.current + deltaAngle;
+    const minRot = -(clubsData.length - 1) * angleStep;
+    const maxRot = 0;
+    newRot = Math.max(minRot - 10, Math.min(maxRot + 10, newRot));
+
+    rotationObj.current.rot = newRot;
+    if (wheelDialRef.current) {
+      wheelDialRef.current.style.transform = `rotate(${newRot}deg)`;
+    }
+    updateWheelLayout();
+
+    const nearestIndex = Math.max(0, Math.min(clubsData.length - 1, Math.round(-newRot / angleStep)));
+    if (nearestIndex !== lastHapticIndexRef.current) {
+      lastHapticIndexRef.current = nearestIndex;
+      triggerHaptic();
+    }
+  };
+
+  const handlePointerUp = (e) => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    setTimeout(() => {
+      wasPointerDraggingRef.current = false;
+    }, 350);
+    
+    const nearestIndex = Math.max(0, Math.min(clubsData.length - 1, Math.round(-rotationObj.current.rot / angleStep)));
+    rotateTo(nearestIndex, 0.4);
+
+    if (e.target.releasePointerCapture && e.pointerId !== undefined) {
+      try { e.target.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+  };
+
+  // Handle wheel scrolling + mobile horizontal touch swipe
   useEffect(() => {
-    let isScrolling = false;
+    let lastWheelTime = 0;
+    let touchStartX = 0;
     let touchStartY = 0;
+    let touchStartIndex = currentIndexRef.current;
 
     const handleWheel = (e) => {
-      // Ignore tiny touchpad wiggles
-      if (Math.abs(e.deltaY) < 20) return;
+      const now = Date.now();
+      // Fast PC mouse wheel response (70ms throttle, 5px min delta)
+      if (now - lastWheelTime < 70) return;
       
-      if (isScrolling) return;
-      isScrolling = true;
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(delta) < 5) return;
 
-      if (e.deltaY > 0 && currentIndex < clubsData.length - 1) {
-        rotateTo(currentIndex + 1);
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        rotateTo(currentIndex - 1);
+      const activeIdx = currentIndexRef.current;
+      if (delta > 0 && activeIdx < clubsData.length - 1) {
+        lastWheelTime = now;
+        rotateTo(activeIdx + 1, 0.25);
+      } else if (delta < 0 && activeIdx > 0) {
+        lastWheelTime = now;
+        rotateTo(activeIdx - 1, 0.25);
       }
-
-      // Slightly longer debounce so touchpads don't scroll multiple items at once
-      setTimeout(() => { isScrolling = false; }, 600);
     };
 
     const handleTouchStart = (e) => {
+      if (isDraggingRef.current || wasPointerDraggingRef.current) return;
+      touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      touchStartIndex = currentIndexRef.current;
+    };
+
+    const handleTouchMove = (e) => {
+      if (isDraggingRef.current || wasPointerDraggingRef.current) return;
+      const deltaX = touchStartX - e.touches[0].clientX;
+      const deltaY = touchStartY - e.touches[0].clientY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 20) {
+        const step = Math.round(deltaX / 50);
+        const targetIdx = Math.max(0, Math.min(clubsData.length - 1, touchStartIndex + step));
+        if (targetIdx !== currentIndexRef.current) {
+          rotateTo(targetIdx, 0.35);
+        }
+      }
     };
 
     const handleTouchEnd = (e) => {
-      if (isScrolling) return;
-      const deltaY = touchStartY - e.changedTouches[0].clientY;
-
-      // Ignore tiny swipes (< 30px)
-      if (Math.abs(deltaY) < 30) return;
-
-      isScrolling = true;
-
-      if (deltaY > 0 && currentIndex < clubsData.length - 1) {
-        // Swipe up → next item
-        rotateTo(currentIndex + 1);
-      } else if (deltaY < 0 && currentIndex > 0) {
-        // Swipe down → previous item
-        rotateTo(currentIndex - 1);
-      }
-
-      setTimeout(() => { isScrolling = false; }, 700);
+      if (isDraggingRef.current || wasPointerDraggingRef.current) return;
     };
 
-    window.addEventListener('wheel', handleWheel);
+    window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [currentIndex, rotateTo]);
+  }, [rotateTo]);
 
-  // Initial layout calculation
+  // Initial layout calculation - run only once on mount
   useEffect(() => {
     rotateTo(0);
-  }, [rotateTo]);
+  }, []);
 
   // Canvas Stars Animation
   useEffect(() => {
@@ -205,7 +298,15 @@ export default function Clubs() {
       <canvas ref={canvasRef} className="clubs-star-canvas" />
       <div className="clubs-ambient-glow" />
 
-      <div className="wheel-scene">
+      <div 
+        ref={wheelSceneRef} 
+        className="wheel-scene"
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        style={{ touchAction: 'none' }}
+      >
         <div className="dial-container">
           <div className="physical-base" />
           <div className="physical-rim" />
