@@ -129,10 +129,17 @@
   transition: color 0.3s, text-shadow 0.3s;
 }
 
-.wheel-item-text span {
+.wheel-item-text span:first-child {
   font-size: 0.85rem;
   color: var(--light-blue);
   font-family: monospace;
+}
+
+.club-title-text {
+  display: block;
+  white-space: normal; /* allow text to wrap onto multiple lines */
+  max-width: clamp(200px, 25vw, 350px);
+  line-height: 1.2;
 }
 
 /* HUD Pointer Bracket */

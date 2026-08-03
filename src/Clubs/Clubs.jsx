@@ -3,14 +3,54 @@ import gsap from 'gsap';
 import './Clubs.css';
 
 const clubsData = [
-  { id: "01", title: "Programming Club", tag: "CLUB 01 // SOFTWARE", desc: "Competitive programming, open-source development, and hackathons." },
-  { id: "02", title: "Robotics Club", tag: "CLUB 02 // HARDWARE", desc: "Autonomous robots, drones, and electro-mechanical systems engineering." },
-  { id: "03", title: "AI Club", tag: "CLUB 03 // INTELLIGENCE", desc: "Deep learning, neural networks, and artificial intelligence research." },
-  { id: "04", title: "Aero-modeling", tag: "CLUB 04 // AEROSPACE", desc: "Aircraft design, flight dynamics, and aerospace engineering." },
-  { id: "05", title: "Astronomy", tag: "CLUB 05 // SPACE", desc: "Stargazing, astrophysics, and cosmology discussions." },
-  { id: "06", title: "Business Club", tag: "CLUB 06 // VENTURES", desc: "Entrepreneurship, finance, and building the next big startups." },
-  { id: "07", title: "Design Club", tag: "CLUB 07 // CREATIVE", desc: "UI/UX, graphic design, and aesthetic digital experiences." },
-  { id: "08", title: "Hardware Club", tag: "CLUB 08 // ELECTRONICS", desc: "Embedded systems, IoT, and custom circuit design." }
+  {
+    id: "01",
+    title: "Aero Modelling Club",
+    tag: "CLUB 01 // AEROSPACE",
+    desc: "Design, build, and fly model aircraft while exploring aerodynamics, propulsion, and flight engineering."
+  },
+  {
+    id: "02",
+    title: "Astronomy Club",
+    tag: "CLUB 02 // COSMOS",
+    desc: "Explore astronomy through telescope observations, astrophysics discussions, and skywatching sessions."
+  },
+  {
+    id: "03",
+    title: "Business Club",
+    tag: "CLUB 03 // ENTREPRENEURSHIP",
+    desc: "Develop business acumen through case competitions, consulting, finance, startups, and leadership initiatives."
+  },
+  {
+    id: "04",
+    title: "Club Of Programmers",
+    tag: "CLUB 04 // SOFTWARE",
+    desc: "Competitive programming, software development, open-source contributions, and hackathons."
+  },
+  {
+    id: "05",
+    title: "Club of Sustainability and Innovation",
+    tag: "CLUB 05 // SUSTAINABILITY",
+    desc: "Drive innovative solutions for environmental challenges through sustainability-focused projects and initiatives."
+  },
+  {
+    id: "06",
+    title: "Robotics Club",
+    tag: "CLUB 06 // ROBOTICS",
+    desc: "Build intelligent robots, autonomous systems, drones, and embedded hardware for competitions and research."
+  },
+  {
+    id: "07",
+    title: "The Quant Club",
+    tag: "CLUB 07 // QUANTITATIVE FINANCE",
+    desc: "Explore quantitative finance, algorithmic trading, machine learning, and mathematical modeling."
+  },
+  {
+    id: "08",
+    title: "Society of Automotive Engineering Collegiate Club",
+    tag: "CLUB 08 // AUTOMOTIVE",
+    desc: "Design, manufacture, and test innovative vehicles while gaining hands-on automotive engineering experience."
+  }
 ];
 
 const angleStep = 20;
@@ -336,7 +376,7 @@ export default function Clubs() {
                 onClick={() => rotateTo(index)}
               >
                 <div ref={el => textRefs.current[index] = el} className="wheel-item-text">
-                  <span>{club.id}</span>{club.title}
+                  <span>{club.id}</span><span className="club-title-text">{club.title}</span>
                 </div>
               </div>
             ))}
