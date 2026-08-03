@@ -51,6 +51,7 @@ export default function TextStretch() {
           start: 'top top',
           end: '+=300%',
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -77,6 +78,7 @@ export default function TextStretch() {
           start: 'top top',
           end: '+=500%',
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -157,7 +159,27 @@ export default function TextStretch() {
 
     });
 
-    return () => ctx.revert();
+    const handleLoad = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener('load', handleLoad);
+
+    const pendingImages = Array.from(document.querySelectorAll('img')).filter(
+      (img) => !img.complete
+    );
+
+    pendingImages.forEach((img) => {
+      img.addEventListener('load', handleLoad, { once: true });
+    });
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('load', handleLoad);
+      pendingImages.forEach((img) => {
+        img.removeEventListener('load', handleLoad);
+      });
+    };
   }, []);
 
   return (
