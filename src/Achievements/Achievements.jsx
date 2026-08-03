@@ -42,9 +42,9 @@ function AchievementCard({ title, subtitle, tier, image, size = "small", index =
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Top-Right Medal Ribbon */}
-      <div className={`ribbon ribbon--${tier}`}>
-        <span>{TIER_EMOJI[tier]} {TIER_LABEL[tier]}</span>
+      {/* Top-Right Medal Badge */}
+      <div className={`medal-badge medal-badge--${tier}`}>
+        <span>{TIER_EMOJI[tier]}</span>
       </div>
 
       {/* Blue Curtain Wall Reveal */}
