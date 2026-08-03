@@ -97,12 +97,12 @@ export default function Clubs() {
         });
         
         if (distance < 5) {
-          textRefs.current[index].style.color = "var(--text-primary)";
-          textRefs.current[index].style.fontWeight = "400";
-          textRefs.current[index].style.textShadow = "0 0 30px var(--light-blue)";
+          textRefs.current[index].style.color = "#ffffff";
+          textRefs.current[index].style.fontWeight = "900";
+          textRefs.current[index].style.textShadow = "0 0 20px rgba(201,168,76,0.6)";
         } else {
-          textRefs.current[index].style.color = "var(--text-muted)";
-          textRefs.current[index].style.fontWeight = "200";
+          textRefs.current[index].style.color = "rgba(255,255,255,0.28)";
+          textRefs.current[index].style.fontWeight = "900";
           textRefs.current[index].style.textShadow = "none";
         }
       }
@@ -295,41 +295,26 @@ export default function Clubs() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let stars = [];
-    let animationFrameId;
 
-    const resizeCanvas = () => {
+    // Static film grain — drawn once per resize, no animation loop needed
+    const drawGrain = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      stars = Array.from({ length: 150 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 1.5,
-        alpha: Math.random() * 0.5 + 0.1,
-        speed: Math.random() * 0.005 + 0.002
-      }));
+      const imageData = ctx.createImageData(canvas.width, canvas.height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const v = Math.random() > 0.97 ? Math.floor(Math.random() * 180 + 60) : 0;
+        data[i] = data[i+1] = data[i+2] = v;
+        data[i+3] = v > 0 ? Math.floor(Math.random() * 40 + 10) : 0;
+      }
+      ctx.putImageData(imageData, 0, 0);
     };
 
-    const drawStars = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
-        star.alpha += star.speed;
-        if (star.alpha > 0.6 || star.alpha < 0.1) star.speed = -star.speed;
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, star.alpha)})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      animationFrameId = requestAnimationFrame(drawStars);
-    };
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-    drawStars();
+    window.addEventListener('resize', drawGrain);
+    drawGrain();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', drawGrain);
     };
   }, []);
 
