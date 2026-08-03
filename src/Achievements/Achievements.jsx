@@ -2,24 +2,95 @@ import { useState, useEffect } from "react";
 import "./Achievements.css";
 
 /* ─── Data ─────────────────────────────────────────────── */
-// Controls: You can change filterColor to any CSS color (e.g., 'blue', '#00ff88', 'transparent')
-// and adjust filterOpacity (0.0 to 1.0) to control the intensity of the effect.
 const achievements = [
-  { title: "INTER-IIT TECH MEET 9.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/techMeet14.jpeg", filterColor: "#0055ff", filterOpacity: 0.4 },
-  { title: "GROW SIMPLE", subtitle: "Problem Statement Winner", tier: "gold", size: "small", image: "/img/growsimple.jpeg", filterColor: "#00ffaa", filterOpacity: 0.35 },
-  { title: "CLOUD PHYSICIAN", subtitle: "Runner-Up", tier: "silver", size: "small", image: "/img/cloudP.jpeg", filterColor: "#0055ff", filterOpacity: 0.5 },
-  { title: "INTER-IIT TECH MEET 10.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit2.jpg", filterColor: "#00ffaa", filterOpacity: 0.4 },
-  { title: "INTER-IIT TECH MEET 11.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit3.jpg", filterColor: "#0055ff", filterOpacity: 0.45 },
-  { title: "SAPTANG LABS", subtitle: "Second Runner-Up", tier: "bronze", size: "small", image: "/img/saptang.jpeg", filterColor: "#00ffaa", filterOpacity: 0.3 },
+  {
+    title: "INTER-IIT TECH MEET",
+    subtitle: "4th Rank overall",
+    tier: "bronze",
+    size: "wide",
+    type: "image",
+    image: "/img/techMeet14.jpeg",
+    filterColor: "#0055ff",
+    filterOpacity: 0.4,
+  },
+  {
+    type: "text",
+    size: "small",
+    header: "CYBER & OPEN SOURCE",
+    accentColor: "#00ffaa",
+    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-Dispel.jpg.webp",
+    bullets: [
+      "Achieved Global Rank 6 and India Rank 1 at Spooky CTF.",
+      "Qualified two teams for the CSAW CTF Global Finals, securing 5th and 40th positions globally.",
+      "Reached All India Rank 20 on CTFtime.",
+      "Multiple students secured selections in prestigious international open-source programs including Google Summer of Code (GSoC), LFX Mentorship, and Summer of Bitcoin.",
+    ],
+  },
+  {
+    type: "text",
+    size: "small",
+    header: "COMPETITIONS & SUMMITS",
+    accentColor: "#0055ff",
+    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-smmr.jpg",
+    bullets: [
+      "Secured multiple Gold Medals at Techkriti '26 IIT Kanpur.",
+      "Secured the Championship Title at IIM Calcutta's CEO Turnaround competition.",
+      "Attained Finalist Status at IIM Ahmedabad's Red Brick Summit.",
+      "Reached the IICPC QuantFest Finals 2025.",
+    ],
+  },
+  {
+    title: "icpc asia west 2026",
+    subtitle: "1st rank",
+    tier: "gold",
+    size: "wide",
+    type: "image",
+    image: "/img/interiit2.jpg",
+    filterColor: "#00ffaa",
+    filterOpacity: 0.4,
+  },
+  {
+    title: "Nidar 2025 drone championship",
+    subtitle: "4th Overall rank",
+    tier: "bronze",
+    size: "wide",
+    type: "image",
+    image: "/img/interiit3.jpg",
+    filterColor: "#0055ff",
+    filterOpacity: 0.45,
+  },
+  {
+    type: "text",
+    size: "small",
+    header: "CP & HACKATHONS",
+    accentColor: "#00ffaa",
+    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-location.jpg.webp",
+    bullets: [
+      "Achieved 2nd Place at ICPC-de-tryst (IIT Delhi).",
+      "Secured 1st and 3rd positions at the BNY Hackathon.",
+      "Achieved 4th Place at BitShift 2026 (IIT Madras).",
+      "Achieved a Top 10 Finish at IIT Kanpur's Eightfold.ao Hackathon.",
+    ],
+  },
 ];
 
-/* ─── Tier emoji & labels ─────────────────────────────── */
-const TIER_EMOJI = { gold: "🥇", silver: "🥈", bronze: "🥉" };
-const TIER_LABEL = { gold: "1ST PLACE", silver: "2ND PLACE", bronze: "3RD PLACE" };
-
-/* ─── Achievement Card (Photo Background) ──────────────── */
-function AchievementCard({ title, subtitle, tier, image, size = "small", index = 0, filterColor = "none", filterOpacity = 0.5 }) {
-  const imgUrl = image;
+/* ─── Achievement Card ────────────────────────────────── */
+function AchievementCard(props) {
+  const {
+    type = "image",
+    title,
+    subtitle,
+    tier = "gold",
+    image,
+    size = "small",
+    index = 0,
+    filterColor = "none",
+    filterOpacity = 0.5,
+    header,
+    bullets = [],
+    accentColor = "#00ffaa",
+    bgImage,
+  } = props;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -34,6 +105,58 @@ function AchievementCard({ title, subtitle, tier, image, size = "small", index =
     e.currentTarget.style.setProperty("--mouse-y", "0px");
   };
 
+  if (type === "text") {
+    return (
+      <figure
+        className={`item item--${size} item--text`}
+        style={{ "--card-index": index, "--accent-color": accentColor }}
+        onMouseEnter={handleMouseMove}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Background Image with Blur */}
+        {bgImage && (
+          <div
+            className="item__text-bg"
+            style={{ backgroundImage: `url(${bgImage})` }}
+          ></div>
+        )}
+
+        {/* Dark Dim Overlay */}
+        <div className="item__text-overlay"></div>
+
+        {/* Blue Curtain Wall Reveal */}
+        <div className="item__reveal-curtain"></div>
+
+        {/* Text Card Content Container */}
+        <div className="item__text-container">
+          {header && (
+            <div className="item__text-header">
+              <span className="item__text-header-tag">{header}</span>
+            </div>
+          )}
+
+          <ul className="item__bullets-list">
+            {bullets.map((bullet, i) => (
+              <li key={i} className="item__bullet-item">
+                <span
+                  className="item__bullet-dot"
+                  style={{
+                    backgroundColor: accentColor,
+                    boxShadow: `0 0 8px ${accentColor}`,
+                  }}
+                ></span>
+                <span className="item__bullet-text">{bullet}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </figure>
+    );
+  }
+
+  const imgUrl = image;
+
   return (
     <figure
       className={`item item--${size} item--${tier}`}
@@ -42,11 +165,6 @@ function AchievementCard({ title, subtitle, tier, image, size = "small", index =
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Top-Right Medal Badge */}
-      <div className={`medal-badge medal-badge--${tier}`}>
-        <span>{TIER_EMOJI[tier]}</span>
-      </div>
-
       {/* Blue Curtain Wall Reveal */}
       <div className="item__reveal-curtain"></div>
 
@@ -66,10 +184,10 @@ function AchievementCard({ title, subtitle, tier, image, size = "small", index =
 
         {/* Color Filter Overlay */}
         {filterColor !== "none" && (
-          <div 
-            className="item__color-filter" 
-            style={{ 
-              backgroundColor: filterColor, 
+          <div
+            className="item__color-filter"
+            style={{
+              backgroundColor: filterColor,
               opacity: filterOpacity,
             }}
           ></div>
