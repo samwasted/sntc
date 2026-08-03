@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import "./Achievements.css";
 
 /* ─── Data ─────────────────────────────────────────────── */
+// Controls: You can change filterColor to any CSS color (e.g., 'blue', '#00ff88', 'transparent')
+// and adjust filterOpacity (0.0 to 1.0) to control the intensity of the effect.
 const achievements = [
-  { title: "INTER-IIT TECH MEET 9.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/techMeet14.jpeg" },
-  { title: "GROW SIMPLE", subtitle: "Problem Statement Winner", tier: "gold", size: "small", image: "/img/growsimple.jpeg" },
-  { title: "CLOUD PHYSICIAN", subtitle: "Runner-Up", tier: "silver", size: "small", image: "/img/cloudP.jpeg" },
-  { title: "INTER-IIT TECH MEET 10.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit2.jpg" },
-  { title: "INTER-IIT TECH MEET 11.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit3.jpg" },
-  { title: "SAPTANG LABS", subtitle: "Second Runner-Up", tier: "bronze", size: "small", image: "/img/saptang.jpeg" },
+  { title: "INTER-IIT TECH MEET 9.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/techMeet14.jpeg", filterColor: "#0055ff", filterOpacity: 0.4 },
+  { title: "GROW SIMPLE", subtitle: "Problem Statement Winner", tier: "gold", size: "small", image: "/img/growsimple.jpeg", filterColor: "#00ffaa", filterOpacity: 0.35 },
+  { title: "CLOUD PHYSICIAN", subtitle: "Runner-Up", tier: "silver", size: "small", image: "/img/cloudP.jpeg", filterColor: "#0055ff", filterOpacity: 0.5 },
+  { title: "INTER-IIT TECH MEET 10.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit2.jpg", filterColor: "#00ffaa", filterOpacity: 0.4 },
+  { title: "INTER-IIT TECH MEET 11.0", subtitle: "Overall Champions", tier: "gold", size: "wide", image: "/img/interiit3.jpg", filterColor: "#0055ff", filterOpacity: 0.45 },
+  { title: "SAPTANG LABS", subtitle: "Second Runner-Up", tier: "bronze", size: "small", image: "/img/saptang.jpeg", filterColor: "#00ffaa", filterOpacity: 0.3 },
 ];
 
 /* ─── Tier emoji & labels ─────────────────────────────── */
@@ -16,7 +18,7 @@ const TIER_EMOJI = { gold: "🥇", silver: "🥈", bronze: "🥉" };
 const TIER_LABEL = { gold: "1ST PLACE", silver: "2ND PLACE", bronze: "3RD PLACE" };
 
 /* ─── Achievement Card (Photo Background) ──────────────── */
-function AchievementCard({ title, subtitle, tier, image, size = "small", index = 0 }) {
+function AchievementCard({ title, subtitle, tier, image, size = "small", index = 0, filterColor = "none", filterOpacity = 0.5 }) {
   const imgUrl = image;
 
   const handleMouseMove = (e) => {
@@ -62,6 +64,17 @@ function AchievementCard({ title, subtitle, tier, image, size = "small", index =
         {/* Cover — fades out on hover */}
         <div className="item__cover" style={{ backgroundImage: `url(${imgUrl})` }}></div>
 
+        {/* Color Filter Overlay */}
+        {filterColor !== "none" && (
+          <div 
+            className="item__color-filter" 
+            style={{ 
+              backgroundColor: filterColor, 
+              opacity: filterOpacity,
+            }}
+          ></div>
+        )}
+
         {/* Dark shadow overlay under curtain */}
         <div className="item__overlay-shadow"></div>
       </div>
@@ -94,12 +107,7 @@ export default function Achievements() {
 
   return (
     <main style={{ "--scroll-progress": scrollRatio }}>
-      <div className="intro">
-        <h2 className="intro__title">
-          <span>SNTC</span>
-          <em>Achievements</em>
-        </h2>
-      </div>
+      {/* Removed intro title per user request */}
 
       <div className="content">
         {achievements.map((a, i) => (

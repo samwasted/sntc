@@ -250,11 +250,11 @@ a:focus-visible {
 
 .content {
 	display: grid;
-	grid-gap: 1.75rem;
+	grid-gap: 2.5rem;
 	margin: 0 auto;
-	padding: 0 2.2rem 20vh;
+	padding: 120px 4vw 20vh; /* 120px clears navbar since title was removed */
 	grid-template-columns: repeat(6, 1fr);
-	grid-auto-rows: 290px;
+	grid-auto-rows: minmax(360px, 42vh); /* Taller rows for much better image ratios */
 }
 
 .item {
@@ -354,7 +354,7 @@ a:focus-visible {
 .glitch__img {
 	grid-area: 1 / 1 / -1 / -1;
 	background-image: var(--img);
-	background-position: 50% 50%;
+	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -912,7 +912,7 @@ a:focus-visible {
 	position: absolute;
 	inset: 0;
 	background-size: cover;
-	background-position: 50% 50%;
+	background-position: center center;
 	transition: opacity var(--fade-in-time) var(--fade-in-easing);
 	pointer-events: none;
 	z-index: 2;
@@ -997,11 +997,28 @@ blockquote {
 	opacity: 0.92;
 }
 
+/* ─── Color Filter Overlay (Tint) ───────────────────────── */
+.item__color-filter {
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	pointer-events: none;
+	mix-blend-mode: color; /* 'color', 'multiply', or 'overlay' work well */
+	transition: opacity var(--fade-out-time) var(--fade-out-easing);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	/* Fade out the filter when hovering so the original photo shows through */
+	.item:hover .item__color-filter {
+		opacity: 0 !important; /* overrides the inline style on hover */
+	}
+}
+
 /* ─── Dark Shadow Overlay (under curtain) ─────────────── */
 .item__overlay-shadow {
 	position: absolute;
 	inset: 0;
-	z-index: 3;
+	z-index: 4; /* Bumped above color filter */
 	pointer-events: none;
 	background: linear-gradient(135deg, rgba(3, 1, 21, 0.95) 0%, rgba(3, 1, 21, 0.65) 32%, rgba(3, 1, 21, 0.05) 50%, rgba(3, 1, 21, 0.65) 68%, rgba(3, 1, 21, 0.95) 100%);
 }
