@@ -1068,23 +1068,23 @@ blockquote {
 
 @media (hover: hover) and (pointer: fine) {
 
-	/* Tier-specific text hover colors & subtle glows */
+	/* Tier-specific text hover colors */
 	.item--gold:hover .item__event-name,
 	.item--gold:hover .item__category {
 		color: #f0c441;
-		text-shadow: 0 0 10px rgba(240, 196, 65, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 	}
 
 	.item--silver:hover .item__event-name,
 	.item--silver:hover .item__category {
 		color: #e2e8f0;
-		text-shadow: 0 0 10px rgba(226, 232, 240, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 	}
 
 	.item--bronze:hover .item__event-name,
 	.item--bronze:hover .item__category {
 		color: #e59866;
-		text-shadow: 0 0 10px rgba(229, 152, 102, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5);
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 	}
 }
 
@@ -1120,18 +1120,17 @@ blockquote {
 	position: relative;
 	overflow: hidden;
 	background: #030816;
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 85, 255, 0.05);
+	border: none;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 	padding: 0;
 	display: flex;
 	flex-direction: column;
-	transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+	transition: box-shadow 0.4s ease, transform 0.3s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
 	.item--text:hover {
-		border-color: var(--accent-color, #00ffaa);
-		box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(0, 255, 170, 0.12), 0 0 15px var(--accent-color, #00ffaa);
+		box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
 	}
 }
 
@@ -1213,7 +1212,7 @@ blockquote {
 	-webkit-backdrop-filter: blur(8px);
 	padding: 4px 10px;
 	border-radius: 6px;
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	border: none;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 

@@ -326,9 +326,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   MID DESKTOP ADAPTIVE SCALING (1041px – 1500px)
+   MID DESKTOP ADAPTIVE SCALING (1300px – 1680px)
 ───────────────────────────────────────────────────────────── */
-@media (min-width: 1041px) and (max-width: 1500px) {
+@media (min-width: 1300px) and (max-width: 1680px) {
   .clubs-container {
     --wheel-orbit: clamp(28vmin, 33vmin, 39vmin);
   }
@@ -355,9 +355,9 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   COMPACT DESKTOP / TABLET STATE (840px – 1040px)
+   COMPACT DESKTOP / TABLET STATE (840px – 1300px)
 ───────────────────────────────────────────────────────────── */
-@media (min-width: 840px) and (max-width: 1040px) {
+@media (min-width: 840px) and (max-width: 1300px) {
   .clubs-container {
     --wheel-orbit: clamp(22vmin, 25vmin, 28vmin);
   }

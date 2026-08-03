@@ -143,7 +143,6 @@ function AchievementCard(props) {
                   className="item__bullet-dot"
                   style={{
                     backgroundColor: accentColor,
-                    boxShadow: `0 0 8px ${accentColor}`,
                   }}
                 ></span>
                 <span className="item__bullet-text">{bullet}</span>
