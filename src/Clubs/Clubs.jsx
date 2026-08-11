@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import './Clubs.css';
+import { url } from 'node:inspector';
 
 const clubsData = [
   {
@@ -8,56 +9,64 @@ const clubsData = [
     title: "Aero Modelling Club",
     tag: "CLUB 01 // AEROSPACE",
     desc: "Design, build, and fly model aircraft while exploring aerodynamics, propulsion, and flight engineering.",
-    logo: "/img/clubs/aeromodellingClub.png"
+    logo: "/img/clubs/aeromodellingClub.png",
+    url: "amc"
   },
   {
     id: "02",
     title: "Astronomy Club",
     tag: "CLUB 02 // COSMOS",
     desc: "Explore astronomy through telescope observations, astrophysics discussions, and skywatching sessions.",
-    logo: "/img/clubs/astroClub.png"
+    logo: "/img/clubs/astroClub.png",
+    url: "https://www.astroiitbhu.co.in/"
   },
   {
     id: "03",
     title: "Business Club",
     tag: "CLUB 03 // ENTREPRENEURSHIP",
     desc: "Develop business acumen through case competitions, consulting, finance, startups, and leadership initiatives.",
-    logo: "/img/clubs/businessClub.jpg"
+    logo: "/img/clubs/businessClub.jpg",
+    url: "https://biz-web-24.vercel.app/"
   },
   {
     id: "04",
     title: "Club Of Programmers",
     tag: "CLUB 04 // SOFTWARE",
     desc: "Competitive programming, software development, open-source contributions, and hackathons.",
-    logo: "/img/clubs/Cops.png"
+    logo: "/img/clubs/Cops.png",
+    "url": "https://copsiitbhu.co.in/"
   },
   {
     id: "05",
     title: "Club of Sustainability and Innovation",
     tag: "CLUB 05 // SUSTAINABILITY",
     desc: "Drive innovative solutions for environmental challenges through sustainability-focused projects and initiatives.",
-    logo: "/img/clubs/sustainabilityClub.jpg"
+    logo: "/img/clubs/sustainabilityClub.jpg",
+    url: "https://club-website-iota.vercel.app/"
   },
   {
     id: "06",
     title: "Robotics Club",
     tag: "CLUB 06 // ROBOTICS",
     desc: "Build intelligent robots, autonomous systems, drones, and embedded hardware for competitions and research.",
-    logo: "/img/clubs/roboticsClub.png"
+    logo: "/img/clubs/roboticsClub.png",
+    url: "https://roboticsclubiitbhu.vercel.app/"
   },
   {
     id: "07",
     title: "The Quant Club",
     tag: "CLUB 07 // QUANTITATIVE FINANCE",
     desc: "Explore quantitative finance, algorithmic trading, machine learning, and mathematical modeling.",
-    logo: "/img/clubs/quantClub.jpg"
+    logo: "/img/clubs/quantClub.jpg",
+    "url": "https://www.tqciitbhu.org/"
   },
   {
     id: "08",
     title: "Society of Automotive Engineering Collegiate Club",
     tag: "CLUB 08 // AUTOMOTIVE",
     desc: "Design, manufacture, and test innovative vehicles while gaining hands-on automotive engineering experience.",
-    logo: "/img/clubs/autoClub.png"
+    logo: "/img/clubs/autoClub.png",
+    url: "https://www.instagram.com/saecollegiateclubiitbhu"
   }
 ];
 
@@ -394,7 +403,14 @@ export default function Clubs() {
           <div className="card-tag card-content-anim">{clubsData[currentIndex]?.tag}</div>
           <h2 className="card-title card-content-anim">{clubsData[currentIndex]?.title}</h2>
           <p className="card-desc card-content-anim">{clubsData[currentIndex]?.desc}</p>
-          <button type="button" className="cta-button card-content-anim">Explore Club</button>
+          {/* <button type="button" className="cta-button card-content-anim">Explore Club</button> */}
+          <button
+            type="button"
+            className="cta-button card-content-anim"
+            onClick={() => window.open(clubsData[currentIndex].url, "_blank")}
+          >
+            Explore Club
+          </button>
         </div>
       </div>
     </div>
