@@ -69,7 +69,7 @@ const achievements = [
       "Achieved 2nd Place at ICPC-de-tryst (IIT Delhi).",
       "Secured 1st and 3rd positions at the BNY Hackathon.",
       "Achieved 4th Place at BitShift 2026 (IIT Madras).",
-      "Achieved a Top 10 Finish at IIT Kanpur's Eightfold.ao Hackathon.",
+      "Achieved a Top 10 Finish at IIT Kanpur's Eightfold.ai Hackathon.",
     ],
   },
 ];
