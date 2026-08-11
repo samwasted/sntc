@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import './Clubs.css';
-import { url } from 'node:inspector';
 
 const clubsData = [
   {

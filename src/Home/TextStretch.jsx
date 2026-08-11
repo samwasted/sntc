@@ -7,25 +7,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function TextStretch() {
   /* ── Section 1: "WE IGNITE …" ──────────────────────────────── */
-  const s1Ref     = useRef(null);
-  const eTopRef   = useRef(null);
-  const eMidRef   = useRef(null);
-  const eBotRef   = useRef(null);
+  const s1Ref = useRef(null);
+  const eTopRef = useRef(null);
+  const eMidRef = useRef(null);
+  const eBotRef = useRef(null);
   const igniteRef = useRef(null);
-  const thatRef   = useRef(null);
-  const lastsRef  = useRef(null);
-  const subRef    = useRef(null);
+  const thatRef = useRef(null);
+  const lastsRef = useRef(null);
+  const subRef = useRef(null);
 
-  const s2Ref              = useRef(null);
-  const techLabelRef       = useRef(null);
-  const techH2Ref          = useRef(null);
-  const techBgSvgRef       = useRef(null);
-  const techDescRef        = useRef(null);
+  const s2Ref = useRef(null);
+  const techLabelRef = useRef(null);
+  const techH2Ref = useRef(null);
+  const techBgSvgRef = useRef(null);
+  const techDescRef = useRef(null);
   const techTextWrapperRef = useRef(null);
-  const teamImgWrapperRef  = useRef(null);
-  const craftGridRef       = useRef(null);
-  const footerBrandRef     = useRef(null);
-  const footerLinksRef     = useRef(null);
+  const teamImgWrapperRef = useRef(null);
+  const craftGridRef = useRef(null);
+  const footerBrandRef = useRef(null);
+  const footerLinksRef = useRef(null);
 
   // Craft scroll section refs
   const craftImagesRef = useRef([]);
@@ -104,8 +104,20 @@ export default function TextStretch() {
       const isMobile = window.innerWidth <= 900;
 
       if (images.length > 0) {
+        // Seed z-indices: first DOM element highest so CSS default stacking is correct
+        images.forEach((img, i) => {
+          gsap.set(img, { zIndex: images.length - i });
+        });
+
         tl2.from(images, {
-          stagger: 0.65,
+          stagger: {
+            each: 0.65,
+            onStart() {
+              // Each card jumps to the top of the stack the moment it starts falling
+              const el = this.targets()[0];
+              gsap.set(el, { zIndex: images.length + images.indexOf(el) + 1 });
+            }
+          },
           // On mobile fly in from the right so cards never pass over the text
           ...(isMobile
             ? { x: window.innerWidth, rotation: () => gsap.utils.random(-10, 10), transformOrigin: 'right center' }
@@ -271,19 +283,32 @@ export default function TextStretch() {
 
             {/* Team image (slides up in phase B) */}
             <div ref={teamImgWrapperRef} className="ts-team-img-wrapper">
-              <div className="ts-team-img" style={{ backgroundImage: 'url(https://picsum.photos/1200/800?grayscale&random=20)' }} />
+              <div className="ts-team-img" style={{ backgroundImage: 'url(/img/technex/technex_main.webp)' }} />
             </div>
 
           </div>
 
           {/* Right: craft images (drop in phase A, shrink in phase B) */}
           <div ref={craftGridRef} className="ts-combined-right craft-grid">
-            {[1, 2, 3, 4, 5].map((item, index) => (
+            {[
+              '/img/technex/robowars_better.jpg',
+              '/img/technex/flying_car.jpg',
+              '/img/technex/hurdle_chall.jpg',
+              '/img/technex/robowar.jpg',
+              '/img/technex/guitarist_dazzle.jpg',
+              '/img/technex/robot.jpg',
+              '/img/technex/darshan_rawal.webp',
+              '/img/technex/rawal_aurafarm.jpg',
+              '/img/technex/Benedetto_Vigna.jpg',
+            ].map((src, index, arr) => (
               <div
                 key={index}
                 ref={addToCraftImages}
                 className="craft-img"
-                style={{ backgroundImage: `url(https://picsum.photos/400/600?random=${item})` }}
+                style={{
+                  backgroundImage: `url(${src})`,
+                  zIndex: arr.length - index,   /* initial stacking: first card on top in CSS */
+                }}
               />
             ))}
           </div>
