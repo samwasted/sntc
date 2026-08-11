@@ -9,7 +9,7 @@ const clubsData = [
     tag: "CLUB 01 // AEROSPACE",
     desc: "Design, build, and fly model aircraft while exploring aerodynamics, propulsion, and flight engineering.",
     logo: "/img/clubs/aeromodellingClub.png",
-    url: "amc"
+    url: "https://amciitbhu.onrender.com/"
   },
   {
     id: "02",
@@ -76,7 +76,7 @@ export default function Clubs() {
   const wheelDialRef = useRef(null);
   const itemRefs = useRef([]);
   const textRefs = useRef([]);
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const rotationObj = useRef({ rot: 0 }); // Proxy object for GSAP to tween
 
@@ -87,7 +87,7 @@ export default function Clubs() {
       let relativeAngle = baseAngle + rotationObj.current.rot;
       relativeAngle = ((relativeAngle + 180) % 360) - 180;
       const distance = Math.abs(relativeAngle);
-      
+
       const rotateXVal = (distance / 20) * 4;
       const translateZVal = -Math.pow(distance / 20, 1.3) * 18;
       const scaleVal = Math.max(0.7, 1 - (distance / 20) * 0.05);
@@ -102,7 +102,7 @@ export default function Clubs() {
         rotateX(${rotateXVal}deg)
         scale(${scaleVal})
       `;
-      
+
       // Clear any stuck pointer-events from previous HMR states
       item.style.pointerEvents = "";
 
@@ -111,7 +111,7 @@ export default function Clubs() {
           opacity: opacityVal,
           filter: `blur(${blurVal}px)`
         });
-        
+
         if (distance < 5) {
           textRefs.current[index].style.color = "#ffffff";
           textRefs.current[index].style.fontWeight = "900";
@@ -153,7 +153,7 @@ export default function Clubs() {
     setCurrentIndex(clampedIndex);
     currentIndexRef.current = clampedIndex;
     const targetRotation = -clampedIndex * angleStep;
-    
+
     gsap.to(rotationObj.current, {
       rot: targetRotation,
       duration: duration,
@@ -166,10 +166,10 @@ export default function Clubs() {
       }
     });
 
-    gsap.to(".card-content-anim", { 
-      opacity: 0, 
-      y: -6, 
-      duration: 0.15, 
+    gsap.to(".card-content-anim", {
+      opacity: 0,
+      y: -6,
+      duration: 0.15,
       onComplete: () => {
         gsap.to(".card-content-anim", { opacity: 1, y: 0, duration: 0.3, stagger: 0.04 });
       }
@@ -181,7 +181,7 @@ export default function Clubs() {
     const rect = wheelSceneRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     dragStartAngleRef.current = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
     dragStartRotRef.current = rotationObj.current.rot;
     isDraggingRef.current = true;
@@ -189,7 +189,7 @@ export default function Clubs() {
     lastHapticIndexRef.current = currentIndexRef.current;
 
     if (e.target.setPointerCapture && e.pointerId !== undefined) {
-      try { e.target.setPointerCapture(e.pointerId); } catch (_) {}
+      try { e.target.setPointerCapture(e.pointerId); } catch (_) { }
     }
   };
 
@@ -201,7 +201,7 @@ export default function Clubs() {
 
     const currentAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
     let deltaAngle = currentAngle - dragStartAngleRef.current;
-    
+
     if (deltaAngle > 180) deltaAngle -= 360;
     if (deltaAngle < -180) deltaAngle += 360;
 
@@ -229,12 +229,12 @@ export default function Clubs() {
     setTimeout(() => {
       wasPointerDraggingRef.current = false;
     }, 350);
-    
+
     const nearestIndex = Math.max(0, Math.min(clubsData.length - 1, Math.round(-rotationObj.current.rot / angleStep)));
     rotateTo(nearestIndex, 0.4);
 
     if (e.target.releasePointerCapture && e.pointerId !== undefined) {
-      try { e.target.releasePointerCapture(e.pointerId); } catch (_) {}
+      try { e.target.releasePointerCapture(e.pointerId); } catch (_) { }
     }
   };
 
@@ -249,7 +249,7 @@ export default function Clubs() {
       const now = Date.now();
       // Fast PC mouse wheel response (70ms throttle, 5px min delta)
       if (now - lastWheelTime < 70) return;
-      
+
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (Math.abs(delta) < 5) return;
 
@@ -320,8 +320,8 @@ export default function Clubs() {
       const data = imageData.data;
       for (let i = 0; i < data.length; i += 4) {
         const v = Math.random() > 0.97 ? Math.floor(Math.random() * 180 + 60) : 0;
-        data[i] = data[i+1] = data[i+2] = v;
-        data[i+3] = v > 0 ? Math.floor(Math.random() * 40 + 10) : 0;
+        data[i] = data[i + 1] = data[i + 2] = v;
+        data[i + 3] = v > 0 ? Math.floor(Math.random() * 40 + 10) : 0;
       }
       ctx.putImageData(imageData, 0, 0);
     };
@@ -339,8 +339,8 @@ export default function Clubs() {
       <canvas ref={canvasRef} className="clubs-star-canvas" />
       <div className="clubs-ambient-glow" />
 
-      <div 
-        ref={wheelSceneRef} 
+      <div
+        ref={wheelSceneRef}
         className="wheel-scene"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -362,7 +362,7 @@ export default function Clubs() {
             </div>
           </div>
           <div className="physical-rim" />
-          
+
           <div ref={wheelDialRef} className="wheel-dial">
             {/* Generate Ticks */}
             {Array.from({ length: 120 }).map((_, i) => {
