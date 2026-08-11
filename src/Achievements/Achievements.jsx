@@ -18,7 +18,7 @@ const achievements = [
     size: "small",
     header: "CYBER & OPEN SOURCE",
     accentColor: "#00ffaa",
-    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-Dispel.jpg.webp",
+    bgImage: "/img/background1.webp",
     bullets: [
       "Achieved Global Rank 6 and India Rank 1 at Spooky CTF.",
       "Qualified two teams for the CSAW CTF Global Finals, securing 5th and 40th positions globally.",
@@ -31,7 +31,7 @@ const achievements = [
     size: "small",
     header: "COMPETITIONS & SUMMITS",
     accentColor: "#0055ff",
-    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-smmr.jpg",
+    bgImage: "/img/growsimple.jpeg",
     bullets: [
       "Secured multiple Gold Medals at Techkriti '26 IIT Kanpur.",
       "Secured the Championship Title at IIM Calcutta's CEO Turnaround competition.",
@@ -64,7 +64,7 @@ const achievements = [
     size: "small",
     header: "CP & HACKATHONS",
     accentColor: "#00ffaa",
-    bgImage: "https://cms.buoy.work/wp-content/uploads/gallery-location.jpg.webp",
+    bgImage: "/img/pc.png",
     bullets: [
       "Achieved 2nd Place at ICPC-de-tryst (IIT Delhi).",
       "Secured 1st and 3rd positions at the BNY Hackathon.",

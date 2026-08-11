@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Achievements from './Achievements/Achievements';
 import Home from './Home/Home';
@@ -18,10 +18,11 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/"            element={<Home />} />
-        <Route path="/clubs"       element={<Clubs />} />
+        <Route path="/"             element={<Home />} />
+        <Route path="/clubs"        element={<Clubs />} />
         <Route path="/achievements" element={<Achievements />} />
-        <Route path="/team"        element={<Team />} />
+        <Route path="/team"         element={<Team />} />
+        <Route path="*"             element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );

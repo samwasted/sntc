@@ -33,7 +33,7 @@ const clubsData = [
     tag: "CLUB 04 // SOFTWARE",
     desc: "Competitive programming, software development, open-source contributions, and hackathons.",
     logo: "/img/clubs/Cops.png",
-    "url": "https://copsiitbhu.co.in/"
+    url: "https://copsiitbhu.co.in/"
   },
   {
     id: "05",
@@ -57,7 +57,7 @@ const clubsData = [
     tag: "CLUB 07 // QUANTITATIVE FINANCE",
     desc: "Explore quantitative finance, algorithmic trading, machine learning, and mathematical modeling.",
     logo: "/img/clubs/quantClub.jpg",
-    "url": "https://www.tqciitbhu.org/"
+    url: "https://www.tqciitbhu.org/"
   },
   {
     id: "08",
