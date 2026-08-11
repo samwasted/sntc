@@ -55,18 +55,15 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* ── Brand ───────────────────────────────────────────────────── */
-.nav-brand {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: #ffb74d; /* light amber */
-  white-space: nowrap;
-  user-select: none;
+/* ── Brand logo ──────────────────────────────────────────────── */
+.nav-brand-logo {
+  display: block;
+  height: 28px;
+  width: auto;
+  object-fit: contain;
   flex-shrink: 0;
   opacity: 1;
-  max-width: 100px;
+  max-width: 120px;
   overflow: hidden;
   transition:
     opacity     0.35s ease,
@@ -74,11 +71,19 @@
     margin      0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* hide brand in pill */
-.navbar-wrapper[data-scrolled="1"] .nav-brand {
+/* hide logo in pill mode */
+.navbar-wrapper[data-scrolled="1"] .nav-brand-logo {
   opacity: 0;
   max-width: 0;
   margin-right: 0;
+}
+
+/* hide logo on home page */
+.nav-brand--hidden {
+  opacity: 0 !important;
+  max-width: 0 !important;
+  margin-right: 0;
+  pointer-events: none;
 }
 
 /* ── Links list ──────────────────────────────────────────────── */

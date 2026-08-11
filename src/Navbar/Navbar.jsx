@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 const navItems = [
@@ -12,6 +12,8 @@ const navItems = [
 
 export default function Navbar() {
   const wrapRef = useRef(null);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => {
@@ -19,7 +21,7 @@ export default function Navbar() {
         wrapRef.current.dataset.scrolled = window.scrollY > 50 ? '1' : '0';
       }
     };
-    onScroll(); // set initial state immediately
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -27,7 +29,11 @@ export default function Navbar() {
   return (
     <header ref={wrapRef} className="navbar-wrapper" data-scrolled="0">
       <div className="nav-inner">
-        <span className="nav-brand">SNTC</span>
+        <img
+          src="/img/sntc-logo.png"
+          alt="SNTC"
+          className={`nav-brand-logo${isHome ? ' nav-brand--hidden' : ''}`}
+        />
         <ul className="navbar-links">
           {navItems.map((item) => (
             <li key={item.id}>
