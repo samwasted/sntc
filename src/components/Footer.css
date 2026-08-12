@@ -1,0 +1,114 @@
+/* ─── Site Footer (shared across pages) ───────────────────── */
+.site-footer {
+  background: #000;
+  width: 100%;
+  padding: 0 clamp(20px, 4vw, 56px) clamp(16px, 2vh, 24px);
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+/* ─── Gradient fade-in modifier (Achievements & Team pages only) ── */
+.site-footer--gradient {
+  position: relative;
+}
+
+.site-footer--gradient::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -120px;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, #000);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Brand / SNTC TEAM SVG row */
+.site-footer__brand {
+  width: 100%;
+  line-height: 0.85;
+}
+
+/* Links bar */
+.site-footer__links {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 14px 0 0;
+  margin-top: 12px;
+}
+
+.site-footer__col h4 {
+  font-size: clamp(9px, 0.9vw, 11px);
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 4px 0;
+}
+
+.site-footer__col p {
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 600;
+  margin: 0;
+}
+
+.site-footer__socials {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.site-footer__social-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__social-link:hover {
+    color: #fff;
+  }
+}
+
+.site-footer__sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.site-footer__col--right {
+  text-align: right;
+}
+
+/* ─── Mobile ── max-width: 900px ──────────────────────────── */
+@media (max-width: 900px) {
+  .site-footer__links {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .site-footer__col--right {
+    text-align: left;
+  }
+
+  .site-footer__socials {
+    flex-wrap: wrap;
+  }
+}
+
+/* ─── Small phones ── max-width: 480px ───────────────────── */
+@media (max-width: 480px) {
+  .site-footer {
+    padding: 0 clamp(12px, 4vw, 24px) 20px;
+  }
+
+  .site-footer__links {
+    gap: 16px;
+    padding-top: 12px;
+  }
+}

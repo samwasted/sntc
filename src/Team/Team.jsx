@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Team.css";
+import Footer from "../components/Footer";
 
 /* ─── Member Data ─────────────────────────────────────────────────── */
 const currentHelm = [
@@ -183,73 +184,52 @@ export default function Team() {
   };
 
   return (
-    <main className="team-page">
-      {/* Background Star Canvas */}
-      <canvas ref={canvasRef} className="team-star-canvas" />
+    <>
+      <main className="team-page">
+        {/* Background Star Canvas */}
+        <canvas ref={canvasRef} className="team-star-canvas" />
 
-      {/* Background Ambient Neon Glow Orbs */}
-      <div className="ambient-glow ambient-glow--cyan" />
-      <div className="ambient-glow ambient-glow--purple" />
+        {/* Background Ambient Neon Glow Orbs */}
+        <div className="ambient-glow ambient-glow--cyan" />
+        <div className="ambient-glow ambient-glow--purple" />
 
-      {/* Header Section */}
-      <div className="team-intro">
-        <span className="team-intro__tag">LEADERSHIP & VISION</span>
-        <h1 className="team-intro__title">
-          <span>The</span>
-          <em>SNTC Helm</em>
-        </h1>
-        <p className="team-intro__subtitle">
-          The Faces behind the SNTC
-        </p>
-      </div>
-
-      {/* Row 1: Current Helm */}
-      <section className="team-section">
-        <div className="section-header">
-          <div className="section-header__title-wrap">
-            <span className="section-dot section-dot--current" />
-            <h2 className="section-title">Current Helm</h2>
-          </div>
+        {/* Header Section */}
+        <div className="team-intro">
+          <span className="team-intro__tag">LEADERSHIP &amp; VISION</span>
+          <h1 className="team-intro__title">
+            <span>The</span>
+            <em>SNTC Helm</em>
+          </h1>
+          <p className="team-intro__subtitle">
+            The Faces behind the SNTC
+          </p>
         </div>
 
-        <div className="team-grid">
-          {currentHelm.map((member) => (
-            <div key={member.id} data-id={member.id} className="grid-item">
-              <TeamCard
-                member={member}
-                type="current"
-                isFocused={getIsCurrentFocused(member.id)}
-                onMouseEnter={() => setHoveredCurrentId(member.id)}
-                onMouseLeave={() => setHoveredCurrentId(null)}
-              />
+        {/* Row 1: Current Helm */}
+        <section className="team-section">
+          <div className="section-header">
+            <div className="section-header__title-wrap">
+              <span className="section-dot section-dot--current" />
+              <h2 className="section-title">Current Helm</h2>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Row 2: Past Helm */}
-      {/* <section className="team-section">
-        <div className="section-header">
-          <div className="section-header__title-wrap">
-            <span className="section-dot section-dot--past" />
-            <h2 className="section-title">Past Helm</h2>
           </div>
-        </div>
 
-        <div className="team-grid">
-          {pastHelm.map((member) => (
-            <div key={member.id} data-id={member.id} className="grid-item">
-              <TeamCard
-                member={member}
-                type="past"
-                isFocused={getIsPastFocused(member.id)}
-                onMouseEnter={() => setHoveredPastId(member.id)}
-                onMouseLeave={() => setHoveredPastId(null)}
-              />
-            </div>
-          ))}
-        </div>
-      </section> */}
-    </main>
+          <div className="team-grid">
+            {currentHelm.map((member) => (
+              <div key={member.id} data-id={member.id} className="grid-item">
+                <TeamCard
+                  member={member}
+                  type="current"
+                  isFocused={getIsCurrentFocused(member.id)}
+                  onMouseEnter={() => setHoveredCurrentId(member.id)}
+                  onMouseLeave={() => setHoveredCurrentId(null)}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+      <Footer withGradient />
+    </>
   );
 }
