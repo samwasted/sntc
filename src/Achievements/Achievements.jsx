@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Achievements.css";
+import Footer from "../components/Footer";
 
 /* ─── Data ─────────────────────────────────────────────── */
 const achievements = [
@@ -224,14 +225,17 @@ export default function Achievements() {
   }, []);
 
   return (
-    <main style={{ "--scroll-progress": scrollRatio }}>
-      {/* Removed intro title per user request */}
+    <>
+      <main style={{ "--scroll-progress": scrollRatio }}>
+        {/* Removed intro title per user request */}
 
-      <div className="content">
-        {achievements.map((a, i) => (
-          <AchievementCard key={i} index={i} {...a} />
-        ))}
-      </div>
-    </main>
+        <div className="content">
+          {achievements.map((a, i) => (
+            <AchievementCard key={i} index={i} {...a} />
+          ))}
+        </div>
+      </main>
+      <Footer withGradient />
+    </>
   );
 }
