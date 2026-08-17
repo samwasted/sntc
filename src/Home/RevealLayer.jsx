@@ -2,25 +2,27 @@ import { useEffect, useRef } from 'react';
 
 const SPOTLIGHT_R = 260;
 
-// Detect touch-only devices once at module level
-const isTouch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
-
 export default function RevealLayer({ image }) {
   const divRef    = useRef(null);
   const mouseRef  = useRef({ x: -9999, y: -9999 });
   const smoothRef = useRef({ x: -9999, y: -9999 });
+  const rafRef    = useRef(null);
 
   useEffect(() => {
-    // No cursor on touch devices — skip entirely
-    if (isTouch) return;
-
     const div = divRef.current;
     if (!div) return;
 
-    let rafId;
+    // Both conditions must be false for the spotlight to be active
+    const mqWidth = window.matchMedia('(max-width: 767px)');
+    const mqHover = window.matchMedia('(hover: none)');
 
-    const onMove = (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+    const isMobile = () => mqWidth.matches || mqHover.matches;
+
+    const hide = () => {
+      cancelAnimationFrame(rafRef.current);
+      div.style.opacity       = '0';
+      div.style.maskImage        = 'none';
+      div.style.webkitMaskImage  = 'none';
     };
 
     const loop = () => {
@@ -28,7 +30,6 @@ export default function RevealLayer({ image }) {
       smoothRef.current.y += (mouseRef.current.y - smoothRef.current.y) * 0.1;
       const { x, y } = smoothRef.current;
 
-      // CSS radial-gradient mask — no canvas, no toDataURL, zero overhead
       const mask = [
         `radial-gradient(circle ${SPOTLIGHT_R}px at ${x}px ${y}px,`,
         `  white 0%,`,
@@ -42,37 +43,55 @@ export default function RevealLayer({ image }) {
 
       div.style.maskImage        = mask;
       div.style.webkitMaskImage  = mask;
+      rafRef.current = requestAnimationFrame(loop);
+    };
 
-      rafId = requestAnimationFrame(loop);
+    const start = () => {
+      if (isMobile()) { hide(); return; }
+      div.style.opacity = '1';
+      rafRef.current = requestAnimationFrame(loop);
+    };
+
+    const stop = () => hide();
+
+    const onQueryChange = () => {
+      if (isMobile()) { stop(); } else { start(); }
+    };
+
+    const onMove = (e) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
     window.addEventListener('mousemove', onMove);
-    rafId = requestAnimationFrame(loop);
+    mqWidth.addEventListener('change', onQueryChange);
+    mqHover.addEventListener('change', onQueryChange);
+
+    // Initial state on mount
+    start();
 
     return () => {
+      cancelAnimationFrame(rafRef.current);
       window.removeEventListener('mousemove', onMove);
-      cancelAnimationFrame(rafId);
+      mqWidth.removeEventListener('change', onQueryChange);
+      mqHover.removeEventListener('change', onQueryChange);
     };
   }, []);
-
-  // Don't render anything on touch devices
-  if (isTouch) return null;
 
   return (
     <div
       ref={divRef}
       style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: `url(${image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        zIndex: 30,
-        pointerEvents: 'none',
-        // hidden until cursor enters viewport
-        maskImage: 'none',
-        WebkitMaskImage: 'none',
+        position:            'absolute',
+        inset:               0,
+        backgroundImage:     `url(${image})`,
+        backgroundSize:      'cover',
+        backgroundPosition:  'center',
+        backgroundRepeat:    'no-repeat',
+        zIndex:              30,
+        pointerEvents:       'none',
+        opacity:             0,         // hidden until effect decides it should show
+        maskImage:           'none',
+        WebkitMaskImage:     'none',
       }}
     />
   );

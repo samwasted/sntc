@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './TextStretch.css';
@@ -17,6 +17,7 @@ export default function TextStretch() {
   const subRef = useRef(null);
 
   const s2Ref = useRef(null);
+  const waveCanvasRef = useRef(null);
   const techLabelRef = useRef(null);
   const techH2Ref = useRef(null);
   const techBgSvgRef = useRef(null);
@@ -194,12 +195,75 @@ export default function TextStretch() {
     };
   }, []);
 
+  /* ── Animated wave-dot canvas ───────────────────────────────── */
+  useEffect(() => {
+    const canvas = waveCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId;
+    let startTime = null;
+
+    const SPACING  = 22;   // grid spacing in px
+    const DOT_R    = 1.4;  // dot radius
+    const AMP_A    = 9;    // primary wave amplitude
+    const AMP_B    = 5;    // secondary wave amplitude
+    const FREQ_A   = 0.014; // spatial freq — horizontal ripple
+    const FREQ_B   = 0.018; // spatial freq — diagonal ripple
+    const SPD_A    = 1.1;  // time speed of primary wave
+    const SPD_B    = 0.7;  // time speed of secondary wave
+
+    const resize = () => {
+      canvas.width  = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    const draw = (ts) => {
+      if (!startTime) startTime = ts;
+      const t = (ts - startTime) / 1000;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const cols = Math.ceil(canvas.width  / SPACING) + 2;
+      const rows = Math.ceil(canvas.height / SPACING) + 2;
+
+      ctx.fillStyle = 'rgba(255,255,255,0.09)';
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const bx = c * SPACING;
+          const by = r * SPACING;
+
+          // Two overlapping waves offset each dot's Y position
+          const dy =
+            Math.sin(bx * FREQ_A + t * SPD_A) * AMP_A +
+            Math.sin((bx + by) * FREQ_B - t * SPD_B) * AMP_B;
+
+          ctx.beginPath();
+          ctx.arc(bx, by + dy, DOT_R, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      animId = requestAnimationFrame(draw);
+    };
+
+    animId = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(animId);
+      ro.disconnect();
+    };
+  }, []);
+
   return (
     <>
       {/* ══════════════════════════════════════════════════════════
        *  SECTION 1 — WE IGNITE INNOVATION THAT LASTS
        * ══════════════════════════════════════════════════════════ */}
       <section ref={s1Ref} className="ts-section">
+        <canvas ref={waveCanvasRef} className="ts-wave-canvas" />
         <div className="ts-inner">
 
           <div className="ts-line ts-line--1">
