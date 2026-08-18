@@ -342,6 +342,9 @@ export default function TextStretch() {
                 <p className="ts-tech-text">
                   Technex is the annual techno-management festival of IIT(BHU) Varanasi — one of the largest technical extravaganzas in Asia. It brings together the brightest minds for innovation, competition, and pushing boundaries.
                 </p>
+                <p className="ts-tech-text ts-tech-text--short">
+                  Technex — IIT(BHU) Varanasi's annual techno-management fest and one of Asia's largest, bringing together the brightest minds for innovation and competition.
+                </p>
               </div>
             </div>
 
