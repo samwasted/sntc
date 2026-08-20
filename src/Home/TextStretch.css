@@ -306,43 +306,51 @@
 }
 
 .ts-col h4 {
-  font-size: clamp(9px, 0.9vw, 11px);
+  font-size: clamp(8px, 0.75vw, 9.5px);
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
   margin: 0 0 4px 0;
 }
 .ts-col p {
-  font-size: clamp(10px, 1.1vw, 13px);
+  font-size: clamp(9px, 0.9vw, 11px);
   font-weight: 600;
   margin: 0;
 }
 
 .footer-social-links {
   display: flex;
-  gap: 8px;
+  gap: 14px;
   align-items: center;
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin: 0;
-  letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.7);
+  margin-top: 6px;
 }
 
 .footer-social-link {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  position: relative;
-  transition: color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.75;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.footer-social-icon {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .footer-social-link:hover {
-    color: #fff;
+    opacity: 1;
+    transform: translateY(-2px);
   }
-  .footer-social-link:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
+}
+
+.ts-col-center {
+  text-align: center;
+}
+
+.ts-col-center .footer-social-links {
+  justify-content: center;
 }
 
 .ts-col-right {
@@ -392,7 +400,9 @@
 
   /* Footer: stack columns and left-align */
   .ts-footer-links { flex-direction: column; gap: 24px; }
-  .ts-col-right { text-align: left; }
+  .ts-col-right,
+  .ts-col-center { text-align: left; }
+  .ts-col-center .footer-social-links { justify-content: flex-start; }
 
   /* SNTC TEAM brand: dark background so it doesn't bleed into image above */
   .ts-footer-brand {
